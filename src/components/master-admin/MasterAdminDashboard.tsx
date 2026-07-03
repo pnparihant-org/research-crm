@@ -119,12 +119,12 @@ export default function MasterAdminDashboard({ session }: { session: Session }) 
       </header>
 
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 pt-6">
-        <div className="flex gap-1 bg-white rounded-xl p-1 shadow-sm border border-gray-200 overflow-x-auto">
+        <div className="flex gap-1 bg-white rounded-xl p-1 shadow-sm border border-gray-200 overflow-x-auto scrollbar-none">
           {tabs.map((t) => (
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap shrink-0 ${
                 tab === t.id ? "bg-purple-700 text-white shadow-sm" : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
               }`}
             >

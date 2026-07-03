@@ -218,7 +218,8 @@ export default function BulkUpload({ onSubmitted, userName, isAdmin = false }: {
       return;
     }
     setSubmitSuccess(true);
-    toast(`${validCount} entr${validCount === 1 ? "y" : "ies"} submitted successfully!`, "success");
+    const n: number = data.inserted ?? validCount;
+    toast(`${n} entr${n === 1 ? "y" : "ies"} submitted successfully!`, "success");
     setRows([]);
     setTimeout(() => { setSubmitSuccess(false); onSubmitted(); }, 2000);
   }

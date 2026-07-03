@@ -168,8 +168,29 @@ const _POST = async (req: NextRequest) => {
     };
   });
 
-  const inserted = await FormSubmission.insertMany(docs, { ordered: false });
-  console.log(`[forms/bulk] POST — inserted ${inserted.length} entries for user=${session.user.email}`);
+  let inserted: unknown[] = [];
+  try {
+    inserted = await FormSubmission.insertMany(docs, { ordered: false });
+  } catch (err: unknown) {
+    // With ordered:false, Mongoose throws BulkWriteError even on partial success.
+    // Successfully inserted docs are on err.insertedDocs.
+    const bulkErr = err as { name?: string; insertedDocs?: unknown[]; writeErrors?: { errmsg?: string }[] };
+    if (bulkErr.name === "MongoBulkWriteError" || bulkErr.name === "BulkWriteError") {
+      inserted = bulkErr.insertedDocs ?? [];
+      const failCount = (bulkErr.writeErrors ?? []).length;
+      console.warn(`[forms/bulk] POST — partial insert: ${inserted.length}/${docs.length} succeeded, ${failCount} failed. Sample error: ${bulkErr.writeErrors?.[0]?.errmsg}`);
+    } else {
+      console.error(`[forms/bulk] POST — insertMany failed completely for user=${session.user.email}:`, err);
+      return NextResponse.json({ error: "Failed to save records. Please try again." }, { status: 500 });
+    }
+  }
+
+  if (inserted.length === 0) {
+    console.error(`[forms/bulk] POST — 0 records inserted for user=${session.user.email}. All ${docs.length} docs failed validation or write.`);
+    return NextResponse.json({ error: "No records were saved — all rows failed validation. Check required fields and try again." }, { status: 500 });
+  }
+
+  console.log(`[forms/bulk] POST — inserted ${inserted.length}/${docs.length} entries for user=${session.user.email}`);
   return NextResponse.json({ inserted: inserted.length }, { status: 201 });
 };
 
