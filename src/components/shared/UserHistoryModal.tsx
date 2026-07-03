@@ -73,29 +73,23 @@ export default function UserHistoryModal({ userId, userName, userEmail, onClose,
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4" onClick={onClose}>
-      <div className="bg-white rounded-2xl shadow-xl p-6 max-w-2xl w-full max-h-[85vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-        <div className="flex items-start justify-between mb-5 gap-3">
-          <div>
-            <h3 className="text-base font-semibold text-gray-900">{userName}&apos;s History</h3>
-            {userEmail && <p className="text-sm text-gray-500 mt-0.5">{userEmail}</p>}
+      <div className="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[85vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
+        {/* Sticky header */}
+        <div className="px-6 pt-6 pb-4 border-b border-gray-100 shrink-0">
+          <div className="flex items-start justify-between mb-4 gap-3">
+            <div>
+              <h3 className="text-base font-semibold text-gray-900">{userName}&apos;s History</h3>
+              {userEmail && <p className="text-sm text-gray-500 mt-0.5">{userEmail}</p>}
+            </div>
+            <button onClick={onClose} className="text-gray-400 hover:text-gray-600 shrink-0">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 shrink-0">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
 
-        {loading ? (
-          <div className="py-12 text-center">
-            <div className={`w-8 h-8 border-2 ${spin} border-t-transparent rounded-full animate-spin mx-auto mb-3`} />
-            <p className="text-gray-500 text-sm">Loading history…</p>
-          </div>
-        ) : error ? (
-          <div className="py-8 text-center text-red-600 text-sm">{error}</div>
-        ) : (
-          <>
-            <div className="flex flex-col sm:flex-row gap-2 mb-4">
+          {!loading && !error && (
+            <div className="flex flex-col sm:flex-row gap-2">
               <div className="relative flex-1">
                 <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -117,8 +111,19 @@ export default function UserHistoryModal({ userId, userName, userEmail, onClose,
               </select>
               <div className="text-sm text-gray-500 flex items-center whitespace-nowrap px-1">{filtered.length} of {submissions.length}</div>
             </div>
+          )}
+        </div>
 
-            {filtered.length === 0 ? (
+        {/* Scrollable body */}
+        <div className="overflow-y-auto flex-1 px-6 py-4">
+        {loading ? (
+          <div className="py-12 text-center">
+            <div className={`w-8 h-8 border-2 ${spin} border-t-transparent rounded-full animate-spin mx-auto mb-3`} />
+            <p className="text-gray-500 text-sm">Loading history…</p>
+          </div>
+        ) : error ? (
+          <div className="py-8 text-center text-red-600 text-sm">{error}</div>
+        ) : filtered.length === 0 ? (
               <div className="py-12 text-center">
                 <svg className="w-10 h-10 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
@@ -177,8 +182,7 @@ export default function UserHistoryModal({ userId, userName, userEmail, onClose,
                 ))}
               </div>
             )}
-          </>
-        )}
+        </div>
       </div>
     </div>
   );
