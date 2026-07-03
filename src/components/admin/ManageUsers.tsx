@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/Toast";
+import UserHistoryModal from "@/components/shared/UserHistoryModal";
 
 const DESIGNATIONS = [
   { group: "Research Dept", options: ["Director of Equity Research", "Executive Vice President - Institutional Equity Sales", "Sr Equity Research Analyst", "Equity Research Analyst", "Institutional Equity Sales Manager", "Equity Research Associate", "Sr Manager Sales", "Buy Side Person", "Intern"] },
@@ -13,6 +14,7 @@ interface UserRow {
   email: string;
   _rawEmail?: string;
   phone?: string;
+  _rawPhone?: string;
   designation?: string;
   dept?: "research" | "institution" | null;
   createdAt: string;
@@ -60,6 +62,9 @@ export default function ManageUsers() {
   const [resetMpinTarget, setResetMpinTarget] = useState<UserRow | null>(null);
   const [resettingMpin, setResettingMpin] = useState(false);
 
+  // History
+  const [historyTarget, setHistoryTarget] = useState<UserRow | null>(null);
+
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -89,7 +94,7 @@ export default function ManageUsers() {
 
   function openEdit(u: UserRow) {
     setEditTarget(u);
-    setEditForm({ name: u.name, email: u._rawEmail ?? u.email, phone: u.phone ?? "", password: "", designation: u.designation ?? "", dept: u.dept ?? "" });
+    setEditForm({ name: u.name, email: u._rawEmail ?? u.email, phone: u._rawPhone ?? u.phone ?? "", password: "", designation: u.designation ?? "", dept: u.dept ?? "" });
     setEditError("");
     setEditShowPassword(false);
   }
@@ -144,6 +149,16 @@ export default function ManageUsers() {
 
   return (
     <>
+      {/* History modal */}
+      {historyTarget && (
+        <UserHistoryModal
+          userId={historyTarget._id}
+          userName={historyTarget.name}
+          userEmail={historyTarget._rawEmail ?? historyTarget.email}
+          onClose={() => setHistoryTarget(null)}
+        />
+      )}
+
       {/* Reset MPIN confirmation modal */}
       {resetMpinTarget && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
@@ -461,7 +476,7 @@ export default function ManageUsers() {
                 </thead>
                 <tbody className="divide-y divide-gray-100">
                   {filtered.map((u) => (
-                    <tr key={u._id} className="hover:bg-gray-50 transition-colors">
+                    <tr key={u._id} onClick={() => setHistoryTarget(u)} className="hover:bg-gray-50 transition-colors cursor-pointer" title="View submission history">
                       <td className="px-4 py-3">
                         <p className="font-medium text-gray-900 leading-snug">{u.name}</p>
                       </td>
@@ -479,9 +494,9 @@ export default function ManageUsers() {
                       <td className="px-4 py-3 text-gray-400 text-xs hidden xl:table-cell">{u.phone || "—"}</td>
                       <td className="px-4 py-3">
                         <div className="flex items-center justify-end gap-2 flex-wrap">
-                          <button onClick={() => openEdit(u)} className="text-xs text-indigo-500 hover:text-indigo-700 font-medium hover:underline transition-colors whitespace-nowrap">Edit</button>
-                          <button onClick={() => setResetMpinTarget(u)} className="text-xs text-amber-500 hover:text-amber-700 font-medium hover:underline transition-colors whitespace-nowrap">Reset MPIN</button>
-                          <button onClick={() => setDeleteTarget(u)} className="text-xs text-red-400 hover:text-red-600 font-medium hover:underline transition-colors whitespace-nowrap">Delete</button>
+                          <button onClick={(e) => { e.stopPropagation(); openEdit(u); }} className="text-xs text-indigo-500 hover:text-indigo-700 font-medium hover:underline transition-colors whitespace-nowrap">Edit</button>
+                          <button onClick={(e) => { e.stopPropagation(); setResetMpinTarget(u); }} className="text-xs text-amber-500 hover:text-amber-700 font-medium hover:underline transition-colors whitespace-nowrap">Reset MPIN</button>
+                          <button onClick={(e) => { e.stopPropagation(); setDeleteTarget(u); }} className="text-xs text-red-400 hover:text-red-600 font-medium hover:underline transition-colors whitespace-nowrap">Delete</button>
                         </div>
                       </td>
                     </tr>
@@ -493,7 +508,7 @@ export default function ManageUsers() {
             {/* Mobile cards — below md */}
             <div className="md:hidden divide-y divide-gray-100">
               {filtered.map((u) => (
-                <div key={u._id} className="px-4 py-3 space-y-1">
+                <div key={u._id} onClick={() => setHistoryTarget(u)} className="px-4 py-3 space-y-1 cursor-pointer active:bg-gray-50">
                   <div className="flex items-center gap-2 flex-wrap">
                     <p className="font-semibold text-gray-900 text-sm">{u.name}</p>
                     {u.dept && <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${DEPT_STYLE[u.dept]}`}>{DEPT_LABEL[u.dept]}</span>}
@@ -504,9 +519,9 @@ export default function ManageUsers() {
                   )}
                   {u.phone && <p className="text-xs text-gray-400">{u.phone}</p>}
                   <div className="flex items-center gap-3 pt-1">
-                    <button onClick={() => openEdit(u)} className="text-xs text-indigo-500 hover:text-indigo-700 font-medium hover:underline transition-colors">Edit</button>
-                    <button onClick={() => setResetMpinTarget(u)} className="text-xs text-amber-500 hover:text-amber-700 font-medium hover:underline transition-colors">Reset MPIN</button>
-                    <button onClick={() => setDeleteTarget(u)} className="text-xs text-red-400 hover:text-red-600 font-medium hover:underline transition-colors">Delete</button>
+                    <button onClick={(e) => { e.stopPropagation(); openEdit(u); }} className="text-xs text-indigo-500 hover:text-indigo-700 font-medium hover:underline transition-colors">Edit</button>
+                    <button onClick={(e) => { e.stopPropagation(); setResetMpinTarget(u); }} className="text-xs text-amber-500 hover:text-amber-700 font-medium hover:underline transition-colors">Reset MPIN</button>
+                    <button onClick={(e) => { e.stopPropagation(); setDeleteTarget(u); }} className="text-xs text-red-400 hover:text-red-600 font-medium hover:underline transition-colors">Delete</button>
                   </div>
                 </div>
               ))}

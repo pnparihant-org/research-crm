@@ -9,8 +9,9 @@ import AssignClients from "@/components/admin/AssignClients";
 import ManageClients from "@/components/admin/ManageClients";
 import ActionLogs from "./ActionLogs";
 import ChangePassword from "@/components/ChangePassword";
+import SharedClients from "@/components/admin/SharedClients";
 
-type Tab = "submissions" | "admins" | "users" | "clients" | "assign" | "logs" | "security";
+type Tab = "submissions" | "admins" | "users" | "clients" | "assign" | "shared" | "logs" | "security";
 
 export default function MasterAdminDashboard({ session }: { session: Session }) {
   const [tab, setTab] = useState<Tab>("submissions");
@@ -62,6 +63,15 @@ export default function MasterAdminDashboard({ session }: { session: Session }) 
       ),
     },
     {
+      id: "shared",
+      label: "Shared Clients",
+      icon: (
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+        </svg>
+      ),
+    },
+    {
       id: "logs",
       label: "Action Logs",
       icon: (
@@ -101,7 +111,7 @@ export default function MasterAdminDashboard({ session }: { session: Session }) 
               <p className="text-sm font-medium text-gray-900">{session.user.name}</p>
               <p className="text-xs text-purple-600 font-medium">Master Admin</p>
             </div>
-            <button onClick={async () => { await signOut({ redirect: false }); window.location.href = "/auth/login"; }} className="text-sm text-gray-500 hover:text-red-600 font-medium transition-colors">
+            <button onClick={() => signOut({ callbackUrl: "/auth/login" })} className="text-sm text-gray-500 hover:text-red-600 font-medium transition-colors">
               Sign Out
             </button>
           </div>
@@ -131,6 +141,7 @@ export default function MasterAdminDashboard({ session }: { session: Session }) 
         {tab === "users" && <ManageUsers />}
         {tab === "clients" && <ManageClients />}
         {tab === "assign" && <AssignClients />}
+        {tab === "shared" && <SharedClients accent="purple" />}
         {tab === "logs" && <ActionLogs />}
         {tab === "security" && <ChangePassword accentColor="purple" />}
       </main>

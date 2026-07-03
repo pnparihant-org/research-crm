@@ -45,6 +45,7 @@ const _GET = async (req: NextRequest) => {
     ...u,
     email: maskEmail(u.email),
     ...(isMasterAdmin && { _rawEmail: u.email }),
+    ...(isMasterAdmin && { _rawPhone: u.phone }),
     phone: maskPhone(u.phone),
     assignedClients: (u.assignedClients ?? []).map((ac: { client: mongoose.Types.ObjectId; assignedByName: string; assignedAt: Date }) => ({
       client: ac.client ? { _id: ac.client.toString(), name: clientMap[ac.client.toString()]?.name ?? "—", code: clientMap[ac.client.toString()]?.code ?? "" } : null,

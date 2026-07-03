@@ -11,8 +11,9 @@ import ChangePassword from "@/components/ChangePassword";
 import FillForm from "@/components/FillForm";
 import BulkUpload from "@/components/BulkUpload";
 import AdminHistory from "./AdminHistory";
+import SharedClients from "./SharedClients";
 
-type Tab = "submissions" | "fill" | "history" | "bulk" | "clients" | "users" | "reports" | "upload-reports" | "security";
+type Tab = "submissions" | "fill" | "history" | "bulk" | "clients" | "users" | "shared" | "reports" | "upload-reports" | "security";
 
 export default function AdminDashboard({ session }: { session: Session }) {
   const [tab, setTab] = useState<Tab>("submissions");
@@ -73,6 +74,15 @@ export default function AdminDashboard({ session }: { session: Session }) {
       ),
     },
     {
+      id: "shared",
+      label: "Shared Clients",
+      icon: (
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+        </svg>
+      ),
+    },
+    {
       id: "reports",
       label: "User Reports",
       icon: (
@@ -122,7 +132,7 @@ export default function AdminDashboard({ session }: { session: Session }) {
               <p className="text-xs text-gray-500">{session.user.email}</p>
             </div>
             <button
-              onClick={async () => { await signOut({ redirect: false }); window.location.href = "/auth/login"; }}
+              onClick={() => signOut({ callbackUrl: "/auth/login" })}
               className="text-sm text-gray-500 hover:text-red-600 font-medium transition-colors"
             >
               Sign Out
@@ -155,6 +165,7 @@ export default function AdminDashboard({ session }: { session: Session }) {
         {tab === "bulk"        && <BulkUpload onSubmitted={() => setTab("submissions")} userName={session.user.name ?? ""} isAdmin />}
         {tab === "clients"     && <ManageClients />}
         {tab === "users"       && <AssignClients />}
+        {tab === "shared"      && <SharedClients accent="indigo" />}
         {tab === "reports"        && <AdminReports />}
         {tab === "upload-reports" && <AdminUploadReports />}
         {tab === "security"       && <ChangePassword accentColor="indigo" />}

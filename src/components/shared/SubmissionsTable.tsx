@@ -711,6 +711,15 @@ export default function SubmissionsTable({
     loadData(serverSearch);
   }
 
+  const hasActiveFilter = Boolean(serverSearch) || Boolean(search) || filterModel.items.length > 0;
+
+  function clearFilters() {
+    setServerSearch("");
+    setSearch("");
+    setFilterModel({ items: [] });
+    loadData();
+  }
+
   const handleFilterModelChange = useCallback((model: GridFilterModel) => {
     setFilterModel(model);
     if (!model.items.length) { setFilteredRows(allRows); return; }
@@ -1016,8 +1025,16 @@ export default function SubmissionsTable({
                   className={`px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 ${ring} w-48`}
                 />
                 <button type="submit" className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-700 font-medium transition-colors">Search</button>
-                {serverSearch && <button type="button" onClick={() => { setServerSearch(""); loadData(); }} className="text-xs text-gray-400 hover:text-gray-600">Clear</button>}
               </form>
+              {hasActiveFilter && (
+                <button
+                  type="button"
+                  onClick={clearFilters}
+                  className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-700 font-medium transition-colors"
+                >
+                  Clear Filter
+                </button>
+              )}
               <span className="text-sm text-gray-500 hidden sm:inline">{filteredRows.length} / {allRows.length} rows</span>
               <button
                 onClick={passwordProtectedExport ? () => { setExportModal(true); setExportPassword(""); setExportShowPwd(false); } : handleSimpleExport}
@@ -1064,7 +1081,10 @@ export default function SubmissionsTable({
               onChange={(e) => setSearch(e.target.value)}
               className={`w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 ${mobileFocusRing}`}
             />
-            <p className="text-xs text-gray-400 mt-2">{mobileFiltered.length} records</p>
+            <div className="flex items-center justify-between mt-2">
+              <p className="text-xs text-gray-400">{mobileFiltered.length} records</p>
+              {hasActiveFilter && <button type="button" onClick={clearFilters} className="text-xs text-gray-400 hover:text-gray-600 font-medium">Clear Filter</button>}
+            </div>
           </div>
           {loading ? (
             <div className="p-8 text-center">

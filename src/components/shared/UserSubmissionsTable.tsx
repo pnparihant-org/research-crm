@@ -153,6 +153,14 @@ export default function UserSubmissionsTable({
 
   useEffect(() => { handleFilterModelChange(filterModel); }, [sharedScope, allRows]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const hasActiveFilter = filterModel.items.length > 0 || Boolean(search) || sharedScope !== "all";
+
+  function clearFilters() {
+    setFilterModel({ items: [] });
+    setSearch("");
+    setSharedScope("all");
+  }
+
   const mobileFiltered = scopedRows.filter((r) => {
     const q = search.toLowerCase();
     return !q || r.company.toLowerCase().includes(q) || r.clientName.toLowerCase().includes(q) ||
@@ -294,7 +302,15 @@ export default function UserSubmissionsTable({
                 </select>
               )}
               <span className="text-sm text-gray-500 hidden sm:inline">{filteredRows.length} / {scopedRows.length} rows</span>
-              
+              {hasActiveFilter && (
+                <button
+                  type="button"
+                  onClick={clearFilters}
+                  className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-700 font-medium transition-colors"
+                >
+                  Clear Filter
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -341,7 +357,10 @@ export default function UserSubmissionsTable({
                 <option value="shared">Shared only</option>
               </select>
             )}
-            <p className="text-xs text-gray-400 mt-2">{mobileFiltered.length} records</p>
+            <div className="flex items-center justify-between mt-2">
+              <p className="text-xs text-gray-400">{mobileFiltered.length} records</p>
+              {hasActiveFilter && <button type="button" onClick={clearFilters} className="text-xs text-gray-400 hover:text-gray-600 font-medium">Clear Filter</button>}
+            </div>
           </div>
           {loading ? (
             <div className="p-8 text-center">

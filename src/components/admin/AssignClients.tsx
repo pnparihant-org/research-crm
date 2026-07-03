@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/components/ui/Toast";
+import UserHistoryModal from "@/components/shared/UserHistoryModal";
 
 interface ClientItem { _id: string; code: string; name: string }
 
@@ -30,6 +31,7 @@ export default function AssignClients() {
   const [clientQuery, setClientQuery] = useState("");
   const [showClientDropdown, setShowClientDropdown] = useState(false);
   const [userSearch, setUserSearch] = useState("");
+  const [historyTarget, setHistoryTarget] = useState<UserItem | null>(null);
   const clientPickerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -130,6 +132,15 @@ export default function AssignClients() {
 
   return (
     <div className="space-y-4 max-w-4xl">
+      {historyTarget && (
+        <UserHistoryModal
+          userId={historyTarget._id}
+          userName={historyTarget.name}
+          userEmail={historyTarget.email}
+          onClose={() => setHistoryTarget(null)}
+        />
+      )}
+
       <div className="bg-white rounded-2xl border border-gray-200 p-5">
         <h2 className="text-lg font-semibold text-gray-900 mb-1">Assign Clients to Users</h2>
         <p className="text-sm text-gray-500">Each user sees only their assigned clients in the form. Assignments are logged with the admin who made them.</p>
@@ -172,6 +183,13 @@ export default function AssignClients() {
                 <span className="text-xs bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-full font-medium">
                   {user.assignedClients.length} client{user.assignedClients.length !== 1 ? "s" : ""}
                 </span>
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); setHistoryTarget(user); }}
+                  className="text-xs text-indigo-500 hover:text-indigo-700 font-medium hover:underline transition-colors whitespace-nowrap"
+                >
+                  History
+                </button>
                 <svg className={`w-4 h-4 text-gray-400 transition-transform ${openUser === user._id ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                 </svg>

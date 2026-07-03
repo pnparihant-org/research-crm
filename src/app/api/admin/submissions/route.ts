@@ -13,11 +13,13 @@ const _GET = async (req: NextRequest) => {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
   const { searchParams } = req.nextUrl;
-  const all = searchParams.get("all") === "true";
+  const userId = searchParams.get("userId")?.trim() ?? "";
+  const all = searchParams.get("all") === "true" || Boolean(userId);
   const limit = all ? 0 : parseInt(searchParams.get("limit") ?? String(DEFAULT_LIMIT), 10);
   const search = searchParams.get("search")?.trim() ?? "";
 
   const filter: Record<string, unknown> = {};
+  if (userId) filter.userId = userId;
   if (search) {
     filter.$or = [
       { clientName:   { $regex: search, $options: "i" } },
