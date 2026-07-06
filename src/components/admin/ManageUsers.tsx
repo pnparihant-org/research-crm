@@ -21,7 +21,7 @@ interface UserRow {
 }
 
 const DEPT_LABEL: Record<string, string> = { research: "Research", institution: "Institution" };
-const DEPT_STYLE: Record<string, string> = { research: "bg-blue-50 text-blue-700", institution: "bg-purple-50 text-purple-700" };
+const DEPT_STYLE: Record<string, string> = { research: "bg-blue-50 text-blue-700", institution: "bg-brand-50 text-brand-700" };
 
 const EyeIcon = ({ open }: { open: boolean }) =>
   open ? (
@@ -220,7 +220,7 @@ export default function ManageUsers() {
                   <input
                     type="text" required value={editForm.name}
                     onChange={(e) => setEditForm((p) => ({ ...p, name: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
                   />
                 </div>
                 <div>
@@ -228,7 +228,7 @@ export default function ManageUsers() {
                   <input
                     type="email" required value={editForm.email}
                     onChange={(e) => setEditForm((p) => ({ ...p, email: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
                   />
                 </div>
                 <div>
@@ -236,7 +236,7 @@ export default function ManageUsers() {
                   <input
                     type="tel" value={editForm.phone}
                     onChange={(e) => setEditForm((p) => ({ ...p, phone: e.target.value.replace(/\D/g, "").slice(0, 10) }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
                     placeholder="Leave blank to keep unchanged"
                   />
                 </div>
@@ -247,7 +247,7 @@ export default function ManageUsers() {
                       type={editShowPassword ? "text" : "password"} minLength={8} value={editForm.password}
                       onChange={(e) => { const v = e.target.value; setEditForm((p) => ({ ...p, password: v })); }}
                       autoComplete="new-password" name="new-password"
-                      className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
                       placeholder="Leave blank to keep unchanged"
                     />
                     <button type="button" onClick={() => setEditShowPassword((v) => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600" tabIndex={-1}>
@@ -260,7 +260,7 @@ export default function ManageUsers() {
                   <select
                     value={editForm.designation}
                     onChange={(e) => setEditForm((p) => ({ ...p, designation: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 appearance-none bg-white"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 appearance-none bg-white"
                   >
                     <option value="">Select designation</option>
                     {DESIGNATIONS.map((g) => (
@@ -275,7 +275,7 @@ export default function ManageUsers() {
                   <select
                     value={editForm.dept}
                     onChange={(e) => setEditForm((p) => ({ ...p, dept: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 appearance-none bg-white"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 appearance-none bg-white"
                   >
                     <option value="">No restriction</option>
                     <option value="research">Research</option>
@@ -288,7 +288,7 @@ export default function ManageUsers() {
                 <button type="button" onClick={() => setEditTarget(null)} className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
                   Cancel
                 </button>
-                <button type="submit" disabled={editSaving} className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white text-sm font-medium rounded-lg transition-colors">
+                <button type="submit" disabled={editSaving} className="px-5 py-2 bg-brand-600 hover:bg-brand-700 disabled:bg-brand-400 text-white text-sm font-medium rounded-lg transition-colors">
                   {editSaving ? "Saving…" : "Save Changes"}
                 </button>
               </div>
@@ -338,7 +338,7 @@ export default function ManageUsers() {
             <h2 className="text-xl font-semibold text-gray-900">Users</h2>
             <button
               onClick={() => { setShowForm((v) => !v); setFormError(""); }}
-              className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium rounded-lg transition-colors"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -360,7 +360,7 @@ export default function ManageUsers() {
                   <input
                     type="text" required value={form.name}
                     onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
                     placeholder="Jane Doe"
                   />
                 </div>
@@ -369,7 +369,7 @@ export default function ManageUsers() {
                   <input
                     type="email" required value={form.email}
                     onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
                     placeholder="user@arihantcapital.com"
                   />
                 </div>
@@ -378,7 +378,7 @@ export default function ManageUsers() {
                   <input
                     type="tel" value={form.phone}
                     onChange={(e) => setForm((p) => ({ ...p, phone: e.target.value.replace(/\D/g, "").slice(0, 10) }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
                     placeholder="10-digit mobile number"
                   />
                 </div>
@@ -389,7 +389,7 @@ export default function ManageUsers() {
                       type={showPassword ? "text" : "password"} required minLength={8} value={form.password}
                       onChange={(e) => { const v = e.target.value; setForm((p) => ({ ...p, password: v })); }}
                       autoComplete="new-password" name="new-password"
-                      className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
                       placeholder="Min. 8 characters"
                     />
                     <button type="button" onClick={() => setShowPassword((v) => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600" tabIndex={-1}>
@@ -402,7 +402,7 @@ export default function ManageUsers() {
                   <select
                     value={form.designation}
                     onChange={(e) => setForm((p) => ({ ...p, designation: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 appearance-none bg-white"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 appearance-none bg-white"
                   >
                     <option value="">Select designation</option>
                     {DESIGNATIONS.map((g) => (
@@ -417,7 +417,7 @@ export default function ManageUsers() {
                   <select
                     value={form.dept}
                     onChange={(e) => setForm((p) => ({ ...p, dept: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 appearance-none bg-white"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 appearance-none bg-white"
                   >
                     <option value="">No restriction</option>
                     <option value="research">Research</option>
@@ -426,7 +426,7 @@ export default function ManageUsers() {
                 </div>
               </div>
               <div className="flex gap-3 pt-1">
-                <button type="submit" disabled={saving} className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white text-sm font-medium rounded-lg transition-colors">
+                <button type="submit" disabled={saving} className="px-5 py-2 bg-brand-600 hover:bg-brand-700 disabled:bg-brand-400 text-white text-sm font-medium rounded-lg transition-colors">
                   {saving ? "Creating…" : "Create User"}
                 </button>
                 <button type="button" onClick={() => { setShowForm(false); setFormError(""); }} className="px-5 py-2 text-gray-500 hover:text-gray-700 text-sm font-medium">
@@ -448,7 +448,7 @@ export default function ManageUsers() {
               <input
                 type="text" placeholder="Search…" value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="pl-9 pr-3 py-1.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 w-48"
+                className="pl-9 pr-3 py-1.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 w-48"
               />
             </div>
           </div>
@@ -488,13 +488,13 @@ export default function ManageUsers() {
                       </td>
                       <td className="px-4 py-3 hidden lg:table-cell">
                         {u.designation
-                          ? <span className="inline-block max-w-[220px] truncate text-xs bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full font-medium" title={u.designation}>{u.designation}</span>
+                          ? <span className="inline-block max-w-[220px] truncate text-xs bg-brand-50 text-brand-700 px-2 py-0.5 rounded-full font-medium" title={u.designation}>{u.designation}</span>
                           : <span className="text-gray-300">—</span>}
                       </td>
                       <td className="px-4 py-3 text-gray-400 text-xs hidden xl:table-cell">{u.phone || "—"}</td>
                       <td className="px-4 py-3">
                         <div className="flex items-center justify-end gap-2 flex-wrap">
-                          <button onClick={(e) => { e.stopPropagation(); openEdit(u); }} className="text-xs text-indigo-500 hover:text-indigo-700 font-medium hover:underline transition-colors whitespace-nowrap">Edit</button>
+                          <button onClick={(e) => { e.stopPropagation(); openEdit(u); }} className="text-xs text-brand-500 hover:text-brand-700 font-medium hover:underline transition-colors whitespace-nowrap">Edit</button>
                           <button onClick={(e) => { e.stopPropagation(); setResetMpinTarget(u); }} className="text-xs text-amber-500 hover:text-amber-700 font-medium hover:underline transition-colors whitespace-nowrap">Reset MPIN</button>
                           <button onClick={(e) => { e.stopPropagation(); setDeleteTarget(u); }} className="text-xs text-red-400 hover:text-red-600 font-medium hover:underline transition-colors whitespace-nowrap">Delete</button>
                         </div>
@@ -515,11 +515,11 @@ export default function ManageUsers() {
                   </div>
                   <p className="text-xs text-gray-500 break-all">{u.email}</p>
                   {u.designation && (
-                    <span className="inline-block text-xs bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full font-medium">{u.designation}</span>
+                    <span className="inline-block text-xs bg-brand-50 text-brand-700 px-2 py-0.5 rounded-full font-medium">{u.designation}</span>
                   )}
                   {u.phone && <p className="text-xs text-gray-400">{u.phone}</p>}
                   <div className="flex items-center gap-3 pt-1">
-                    <button onClick={(e) => { e.stopPropagation(); openEdit(u); }} className="text-xs text-indigo-500 hover:text-indigo-700 font-medium hover:underline transition-colors">Edit</button>
+                    <button onClick={(e) => { e.stopPropagation(); openEdit(u); }} className="text-xs text-brand-500 hover:text-brand-700 font-medium hover:underline transition-colors">Edit</button>
                     <button onClick={(e) => { e.stopPropagation(); setResetMpinTarget(u); }} className="text-xs text-amber-500 hover:text-amber-700 font-medium hover:underline transition-colors">Reset MPIN</button>
                     <button onClick={(e) => { e.stopPropagation(); setDeleteTarget(u); }} className="text-xs text-red-400 hover:text-red-600 font-medium hover:underline transition-colors">Delete</button>
                   </div>

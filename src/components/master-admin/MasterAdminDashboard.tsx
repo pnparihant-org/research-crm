@@ -92,24 +92,21 @@ export default function MasterAdminDashboard({ session }: { session: Session }) 
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200 shadow-sm">
+    <div className="min-h-screen bg-brand-50/40">
+      <header className="bg-brand-50 border-b border-brand-100 shadow-sm">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-purple-700 rounded-lg flex items-center justify-center">
-              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-              </svg>
-            </div>
+            <img src="/ACML-Logo-Green-Bg.svg" alt="Arihant Capital Markets" className="h-9 w-auto rounded-lg" />
+            <div className="w-px h-6 bg-gray-300" />
             <div>
-              <span className="text-xl font-bold text-gray-900">CRM</span>
-              <span className="ml-2 text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-medium">Master Admin</span>
+              <span className="text-sm font-semibold text-gray-600">CRM</span>
+              <span className="ml-2 text-xs bg-brand-100 text-brand-700 px-2 py-0.5 rounded-full font-medium">Master Admin</span>
             </div>
           </div>
           <div className="flex items-center gap-4">
             <div className="text-right hidden sm:block">
               <p className="text-sm font-medium text-gray-900">{session.user.name}</p>
-              <p className="text-xs text-purple-600 font-medium">Master Admin</p>
+              <p className="text-xs text-brand-600 font-medium">Master Admin</p>
             </div>
             <button onClick={() => signOut({ callbackUrl: "/auth/login" })} className="text-sm text-gray-500 hover:text-red-600 font-medium transition-colors">
               Sign Out
@@ -125,7 +122,7 @@ export default function MasterAdminDashboard({ session }: { session: Session }) 
               key={t.id}
               onClick={() => setTab(t.id)}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap shrink-0 ${
-                tab === t.id ? "bg-purple-700 text-white shadow-sm" : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                tab === t.id ? "bg-brand-700 text-white shadow-sm" : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
               }`}
             >
               {t.icon}
@@ -135,7 +132,7 @@ export default function MasterAdminDashboard({ session }: { session: Session }) 
         </div>
       </div>
 
-      <main className="w-full px-4 sm:px-6 py-6">
+      <main className="max-w-screen-xl mx-auto px-4 sm:px-6 py-6">
         {tab === "submissions" && <MasterAdminSubmissions />}
         {tab === "admins" && <ManageAdmins />}
         {tab === "users" && <ManageUsers />}

@@ -241,7 +241,7 @@ export async function sendPasswordResetEmail(to: string, name: string, resetUrl:
     html: `
       <p>Hi ${name},</p>
       <p>Click the link below to reset your password. The link expires in <strong>1 hour</strong>.</p>
-      <p><a href="${resetUrl}" style="color:#0f766e;font-weight:bold;">Reset Password</a></p>
+      <p><a href="${resetUrl}" style="color:#2B9443;font-weight:bold;">Reset Password</a></p>
       <p>If you did not request this, ignore this email.</p>
       <p style="color:#9ca3af;font-size:12px;">Arihant Capital Markets — CRM</p>
     `,

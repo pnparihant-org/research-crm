@@ -233,8 +233,8 @@ export default function BulkUpload({ onSubmitted, userName, isAdmin = false }: {
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
         <div className="bg-white rounded-2xl shadow-xl p-6 max-w-sm w-full">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center shrink-0">
-              <svg className="w-5 h-5 text-teal-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <div className="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center shrink-0">
+              <svg className="w-5 h-5 text-brand-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
@@ -261,7 +261,7 @@ export default function BulkUpload({ onSubmitted, userName, isAdmin = false }: {
             <button
               onClick={() => { setShowConfirm(false); handleSubmit(); }}
               disabled={loading}
-              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-teal-700 hover:bg-teal-800 disabled:opacity-60 rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-brand-700 hover:bg-brand-800 disabled:opacity-60 rounded-lg transition-colors"
             >
               {loading && (
                 <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
@@ -278,10 +278,10 @@ export default function BulkUpload({ onSubmitted, userName, isAdmin = false }: {
     <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
 
       {/* Header */}
-      <div className="bg-gradient-to-r from-teal-600 to-teal-500 px-4 sm:px-8 py-5 sm:py-6">
-        <p className="text-teal-200 text-xs font-semibold uppercase tracking-widest mb-1">Arihant Capital Markets</p>
+      <div className="bg-gradient-to-r from-brand-600 to-brand-500 px-4 sm:px-8 py-5 sm:py-6">
+        <p className="text-brand-200 text-xs font-semibold uppercase tracking-widest mb-1">Arihant Capital Markets</p>
         <h2 className="text-2xl font-bold text-white tracking-tight">Bulk Upload</h2>
-        <p className="text-teal-100/80 text-sm mt-1">Upload an Excel file to log multiple interactions at once</p>
+        <p className="text-brand-100/80 text-sm mt-1">Upload an Excel file to log multiple interactions at once</p>
       </div>
 
       <div className="px-4 sm:px-8 py-6 space-y-5">
@@ -295,7 +295,7 @@ export default function BulkUpload({ onSubmitted, userName, isAdmin = false }: {
             </p>
             <button
               onClick={() => downloadTemplate()}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-teal-50 text-teal-700 border border-teal-200 text-sm font-semibold hover:bg-teal-100 transition-colors shrink-0"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-brand-50 text-brand-700 border border-brand-200 text-sm font-semibold hover:bg-brand-100 transition-colors shrink-0"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -313,7 +313,7 @@ export default function BulkUpload({ onSubmitted, userName, isAdmin = false }: {
             onDragLeave={() => setDragging(false)}
             onDrop={onDrop}
             onClick={() => fileRef.current?.click()}
-            className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-colors ${dragging ? "border-teal-500 bg-teal-50" : "border-gray-300 hover:border-teal-400 hover:bg-gray-50"}`}
+            className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-colors ${dragging ? "border-brand-500 bg-brand-50" : "border-gray-300 hover:border-brand-400 hover:bg-gray-50"}`}
           >
             <svg className="w-8 h-8 text-gray-400 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -444,7 +444,7 @@ export default function BulkUpload({ onSubmitted, userName, isAdmin = false }: {
               <button
                 onClick={() => setShowConfirm(true)}
                 disabled={loading || submitSuccess || validCount === 0}
-                className="inline-flex items-center justify-center gap-2 bg-teal-700 hover:bg-teal-800 disabled:bg-teal-400 disabled:cursor-not-allowed text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition-colors shrink-0"
+                className="inline-flex items-center justify-center gap-2 bg-brand-700 hover:bg-brand-800 disabled:bg-brand-400 disabled:cursor-not-allowed text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition-colors shrink-0"
               >
                 {submitSuccess ? "Submitted!" : `Submit ${validCount} Entr${validCount === 1 ? "y" : "ies"}`}
               </button>

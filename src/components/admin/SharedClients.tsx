@@ -33,7 +33,7 @@ function badgeClass(n: number) {
 function leftBorder(n: number, accent: "indigo" | "purple") {
   if (n >= 5) return "#F43F5E";
   if (n >= 3) return "#F59E0B";
-  return accent === "purple" ? "#9333EA" : "#6366F1";
+  return accent === "purple" ? "#2B9443" : "#34B350";
 }
 
 function fmtDate(iso: string) {
@@ -46,8 +46,8 @@ export default function SharedClients({ accent = "indigo" }: Props) {
   const [search, setSearch] = useState("");
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
 
-  const ring = accent === "purple" ? "focus:ring-purple-500" : "focus:ring-indigo-500";
-  const accentHex = accent === "purple" ? "#7C3AED" : "#4F46E5";
+  const ring = accent === "purple" ? "focus:ring-brand-500" : "focus:ring-brand-500";
+  const accentHex = accent === "purple" ? "#2B9443" : "#34B350";
 
   useEffect(() => {
     fetch("/api/admin/users")

@@ -30,9 +30,14 @@ interface Props {
 }
 
 const REC_STYLES: Record<string, string> = {
-  Buy: "bg-green-100 text-green-700",
+  Buy: "bg-brand-100 text-brand-800",
   Sell: "bg-red-100 text-red-700",
-  Hold: "bg-yellow-100 text-yellow-700",
+  Hold: "bg-amber-100 text-amber-800",
+};
+
+const TYPE_STYLES: Record<string, string> = {
+  institution: "bg-slate-200 text-slate-700",
+  research: "bg-slate-100 text-slate-600",
 };
 
 export default function UserHistoryModal({ userId, userName, userEmail, onClose, accent = "indigo" }: Props) {
@@ -43,8 +48,8 @@ export default function UserHistoryModal({ userId, userName, userEmail, onClose,
   const [search, setSearch] = useState("");
   const [filterRec, setFilterRec] = useState("");
 
-  const ring = accent === "purple" ? "focus:ring-purple-500" : "focus:ring-indigo-500";
-  const spin = accent === "purple" ? "border-purple-600" : "border-indigo-600";
+  const ring = "focus:ring-brand-500";
+  const spin = "border-brand-600";
 
   useEffect(() => {
     setLoading(true);
@@ -115,37 +120,38 @@ export default function UserHistoryModal({ userId, userName, userEmail, onClose,
         </div>
 
         {/* Scrollable body */}
-        <div className="overflow-y-auto flex-1 px-6 py-4">
+        <div className="overflow-y-auto flex-1">
         {loading ? (
-          <div className="py-12 text-center">
+          <div className="py-12 px-6 text-center">
             <div className={`w-8 h-8 border-2 ${spin} border-t-transparent rounded-full animate-spin mx-auto mb-3`} />
             <p className="text-gray-500 text-sm">Loading history…</p>
           </div>
         ) : error ? (
-          <div className="py-8 text-center text-red-600 text-sm">{error}</div>
+          <div className="py-8 px-6 text-center text-red-600 text-sm">{error}</div>
         ) : filtered.length === 0 ? (
-              <div className="py-12 text-center">
+              <div className="py-12 px-6 text-center">
                 <svg className="w-10 h-10 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                 </svg>
                 <p className="text-gray-500 font-medium text-sm">{submissions.length === 0 ? "No submissions yet" : "No matching submissions"}</p>
               </div>
             ) : (
-              <div className="space-y-3">
+              <div className="divide-y divide-gray-100">
                 {filtered.map((s) => (
-                  <div key={s._id} className="border border-gray-200 rounded-xl overflow-hidden">
-                    <div className="p-4 cursor-pointer hover:bg-gray-50 transition-colors" onClick={() => setExpanded(expanded === s._id ? null : s._id)}>
+                  <div key={s._id}>
+                    <div className="px-6 py-3.5 cursor-pointer hover:bg-brand-50/40 transition-colors" onClick={() => setExpanded(expanded === s._id ? null : s._id)}>
                       <div className="flex items-start justify-between gap-4">
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 flex-wrap mb-1">
                             {s.formType === "institution" ? (
                               <>
                                 <span className="font-semibold text-gray-900 text-sm">{s.clientName}</span>
-                                <span className="text-xs bg-purple-50 text-purple-600 px-2 py-0.5 rounded-full font-medium">Institution</span>
+                                <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${TYPE_STYLES.institution}`}>Institution</span>
                               </>
                             ) : (
                               <>
                                 <span className="font-semibold text-gray-900 text-sm">{s.company}</span>
+                                <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${TYPE_STYLES.research}`}>Research</span>
                                 {s.recommendation && <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${REC_STYLES[s.recommendation]}`}>{s.recommendation}</span>}
                                 {s.sector && <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{s.sector}</span>}
                               </>
@@ -166,7 +172,7 @@ export default function UserHistoryModal({ userId, userName, userEmail, onClose,
                     </div>
 
                     {expanded === s._id && (
-                      <div className="border-t border-gray-100 px-4 py-4 bg-gray-50">
+                      <div className="px-6 py-4 bg-gray-50 border-t border-gray-100">
                         <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
                           <Detail label="Designation" value={s.designation} />
                           {s.formType !== "institution" && <Detail label="CMP & Target" value={s.cmpTarget} />}

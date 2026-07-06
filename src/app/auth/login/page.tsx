@@ -50,10 +50,10 @@ const TAB_CONFIG: Record<LoginTab, {
     label: 'Client Login',
     expectedRoles: ['user'],
     accent: 'teal',
-    ring: 'focus:ring-teal-500',
-    btn: 'bg-teal-600 hover:bg-teal-700 active:bg-teal-800 disabled:bg-teal-300',
-    activeBg: 'bg-teal-50',
-    activeText: 'text-teal-700 border-teal-600',
+    ring: 'focus:ring-brand-500',
+    btn: 'bg-brand-600 hover:bg-brand-700 active:bg-brand-800 disabled:bg-brand-300',
+    activeBg: 'bg-brand-50',
+    activeText: 'text-brand-700 border-brand-600',
     icon: (
       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -65,10 +65,10 @@ const TAB_CONFIG: Record<LoginTab, {
     label: 'Admin Login',
     expectedRoles: ['admin', 'master_admin'],
     accent: 'indigo',
-    ring: 'focus:ring-indigo-500',
-    btn: 'bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 disabled:bg-indigo-300',
-    activeBg: 'bg-indigo-50',
-    activeText: 'text-indigo-700 border-indigo-600',
+    ring: 'focus:ring-brand-500',
+    btn: 'bg-brand-600 hover:bg-brand-700 active:bg-brand-800 disabled:bg-brand-300',
+    activeBg: 'bg-brand-50',
+    activeText: 'text-brand-700 border-brand-600',
     icon: (
       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -119,7 +119,7 @@ function PinBoxes({ value, onChange, ring, masked = false }: { value: string; on
   }
 
   return (
-    <div className="flex gap-2 justify-center">
+    <div className="flex gap-1 sm:gap-2 justify-center">
       {Array.from({ length: 6 }).map((_, i) => (
         <input
           key={i}
@@ -133,10 +133,9 @@ function PinBoxes({ value, onChange, ring, masked = false }: { value: string; on
           onPaste={handlePaste}
           onFocus={(e) => e.target.select()}
           autoComplete="off"
-          className={`w-11 text-center text-xl font-mono font-bold border-2 rounded-xl focus:outline-none focus:ring-2 ${ring} transition-all ${
+          className={`w-8 sm:w-11 h-11 sm:h-[3.25rem] text-center text-lg sm:text-xl font-mono font-bold border-2 rounded-xl focus:outline-none focus:ring-2 ${ring} transition-all ${
             value[i] ? 'border-current bg-gray-50 text-gray-900' : 'border-gray-200 bg-white text-gray-400'
           }`}
-          style={{ height: '3.25rem' }}
         />
       ))}
     </div>
@@ -315,7 +314,7 @@ export default function LoginPage() {
   const cfg = TAB_CONFIG[activeTab]
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 via-blue-50 to-indigo-100 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 via-blue-50 to-brand-100 p-4">
       <div className="w-full max-w-md">
         {/* Branding */}
         <div className="text-center mb-6">
@@ -348,8 +347,8 @@ export default function LoginPage() {
             <div className="text-center mb-6">
               {step === 'mpin' ? (
                 <>
-                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-teal-50 mb-3">
-                    <svg className="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-brand-50 mb-3">
+                    <svg className="w-6 h-6 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                         d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
@@ -438,7 +437,7 @@ export default function LoginPage() {
                     <button
                       type="button"
                       onClick={() => { setForgotEmail(email ? email + EMAIL_DOMAIN : ''); setStep('forgot'); setError(''); setForgotSent(false); setForgotResetUrl('') }}
-                      className="text-xs text-teal-600 hover:text-teal-700 font-medium"
+                      className="text-xs text-brand-600 hover:text-brand-700 font-medium"
                     >
                       Forgot password?
                     </button>
@@ -680,7 +679,7 @@ export default function LoginPage() {
                     {forgotResetUrl && (
                       <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-sm">
                         <p className="text-amber-800 font-semibold mb-1.5">Dev mode — reset link:</p>
-                        <a href={forgotResetUrl} className="text-teal-600 break-all text-xs hover:underline">{forgotResetUrl}</a>
+                        <a href={forgotResetUrl} className="text-brand-600 break-all text-xs hover:underline">{forgotResetUrl}</a>
                       </div>
                     )}
                     <button

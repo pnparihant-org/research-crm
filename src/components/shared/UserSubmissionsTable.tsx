@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback } from "react";
 import {
   DataGrid, GridColDef, GridToolbarContainer, GridToolbarFilterButton,
   GridToolbarDensitySelector, GridToolbarColumnsButton, GridRenderCellParams,
-  GridFilterModel, getGridStringOperators,
+  GridFilterModel, GridColumnVisibilityModel, getGridStringOperators,
 } from "@mui/x-data-grid";
 import { Chip, Tooltip, Box } from "@mui/material";
 import { useToast } from "@/components/ui/Toast";
@@ -41,8 +41,64 @@ interface Props {
   accent?: "teal" | "indigo" | "purple";
 }
 
-const REC_COLOR: Record<string, "success" | "error" | "warning"> = { Buy: "success", Sell: "error", Hold: "warning" };
-const REC_STYLES: Record<string, string> = { Buy: "bg-green-100 text-green-700", Sell: "bg-red-100 text-red-700", Hold: "bg-yellow-100 text-yellow-700" };
+const REC_STYLES: Record<string, string> = { Buy: "bg-brand-100 text-brand-800", Sell: "bg-red-100 text-red-700", Hold: "bg-amber-100 text-amber-800" };
+const REC_CHIP_SX: Record<string, { bgcolor: string; color: string }> = {
+  Buy: { bgcolor: "#C8F5C2", color: "#237736" },
+  Sell: { bgcolor: "#FEE2E2", color: "#B91C1C" },
+  Hold: { bgcolor: "#FEF3C7", color: "#92400E" },
+};
+const TYPE_CHIP_SX: Record<string, { bgcolor: string; color: string }> = {
+  institution: { bgcolor: "#E2E8F0", color: "#334155" },
+  research: { bgcolor: "#F1F5F9", color: "#475569" },
+};
+
+// Only the fields a reviewer scans at a glance are on by default; the rest stay one
+// click away via the toolbar's Columns button, and are always visible in the row detail modal.
+const DEFAULT_COLUMN_VISIBILITY: GridColumnVisibilityModel = {
+  designation: false,
+  modeOfCommunication: false,
+  sector: false,
+  cmpTarget: false,
+  analystName: false,
+  buySideAnalystDesignation: false,
+  rationale: false,
+  feedback: false,
+  others: false,
+  submittedAt: false,
+};
+
+// Short fields sit in the 2-column grid; long free-text fields get their own full-width
+// block below so paragraphs of text don't get squeezed into a half-width cell.
+const FIELD_LABELS: [keyof Row, string][] = [
+  ["date", "Date"],
+  ["salesPerson", "Arihant Representative"],
+  ["clientName", "Client"],
+  ["designation", "Designation"],
+  ["modeOfCommunication", "Mode of Communication"],
+  ["company", "Company"],
+  ["sector", "Sector"],
+  ["cmpTarget", "CMP & Target"],
+  ["analystName", "Buy Side Person"],
+  ["buySideAnalystDesignation", "Buy Side Person Designation"],
+  ["submittedAt", "Submitted At"],
+];
+
+const LONG_FIELD_LABELS: [keyof Row, string][] = [
+  ["rationale", "Rationale"],
+  ["feedback", "Feedback"],
+  ["others", "Others"],
+];
+
+function LongTextCell({ value }: { value: string }) {
+  if (!value) return <span className="text-gray-300">—</span>;
+  return (
+    <Tooltip title={value} placement="top" arrow>
+      <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "block" }}>
+        {value}
+      </span>
+    </Tooltip>
+  );
+}
 
 function Toolbar() {
   return (
@@ -99,12 +155,13 @@ export default function UserSubmissionsTable({
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [confirmId, setConfirmId] = useState<string | null>(null);
   const [exporting, setExporting] = useState(false);
+  const [selectedRow, setSelectedRow] = useState<Row | null>(null);
   const { toast } = useToast();
 
   const accentMap = {
-    teal: { ring: "focus:ring-teal-500", btn: "bg-teal-600 hover:bg-teal-700 disabled:bg-teal-300", header: "#f0fdfa", spin: "border-teal-600" },
-    indigo: { ring: "focus:ring-indigo-400", btn: "bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300", header: "#eef2ff", spin: "border-indigo-600" },
-    purple: { ring: "focus:ring-purple-400", btn: "bg-purple-700 hover:bg-purple-800 disabled:bg-purple-300", header: "#faf5ff", spin: "border-purple-600" },
+    teal: { ring: "focus:ring-brand-500", btn: "bg-brand-600 hover:bg-brand-700 disabled:bg-brand-300", header: "#F1FBEF", spin: "border-brand-600" },
+    indigo: { ring: "focus:ring-brand-400", btn: "bg-brand-600 hover:bg-brand-700 disabled:bg-brand-300", header: "#F1FBEF", spin: "border-brand-600" },
+    purple: { ring: "focus:ring-brand-400", btn: "bg-brand-700 hover:bg-brand-800 disabled:bg-brand-300", header: "#F1FBEF", spin: "border-brand-600" },
   } as const;
   const { ring, btn, header: headerBg, spin: spinColor } = accentMap[accent];
 
@@ -198,7 +255,7 @@ export default function UserSubmissionsTable({
       field: "actions", headerName: "", width: 60, sortable: false, filterable: false, disableColumnMenu: true,
       renderCell: (p: GridRenderCellParams) => (
         <button
-          onClick={() => setConfirmId(p.row.id as string)}
+          onClick={(e) => { e.stopPropagation(); setConfirmId(p.row.id as string); }}
           disabled={deletingId === p.row.id || p.row.isShared}
           title={p.row.isShared ? "Shared submissions can't be deleted" : "Delete submission"}
           className="flex items-center justify-center w-8 h-8 rounded-lg text-red-500 hover:bg-red-50 hover:text-red-700 transition-colors disabled:opacity-30 disabled:hover:bg-transparent"
@@ -210,34 +267,43 @@ export default function UserSubmissionsTable({
       ),
     } as GridColDef] : []),
     { field: "date", headerName: "Date", width: 110, filterOperators: strOps },
-    { field: "salesPerson", headerName: "Arihant Representative", width: 160, filterOperators: strOps },
-    { field: "clientName", headerName: "Client", width: 200, filterOperators: strOps },
+    { field: "salesPerson", headerName: "Arihant Representative", flex: 1, minWidth: 160, filterOperators: strOps },
+    { field: "clientName", headerName: "Client", flex: 1.2, minWidth: 180, filterOperators: strOps },
     { field: "designation", headerName: "Designation", width: 140, filterOperators: strOps },
     { field: "modeOfCommunication", headerName: "Mode", width: 130, filterOperators: strOps },
     {
-      field: "formType", headerName: "Type", width: 120, filterOperators: strOps,
+      field: "formType", headerName: "Type", width: 115, filterOperators: strOps,
       renderCell: (p: GridRenderCellParams) => (
         <Chip
           label={p.value === "institution" ? "Institution" : "Research"}
           size="small"
-          sx={{ fontWeight: 600, fontSize: 12, bgcolor: p.value === "institution" ? "#f3e8ff" : "#eff6ff", color: p.value === "institution" ? "#7e22ce" : "#1d4ed8" }}
+          sx={{ fontWeight: 600, fontSize: 12, ...TYPE_CHIP_SX[p.value as string] }}
         />
       ),
     },
-    { field: "company", headerName: "Company", width: 150, filterOperators: strOps },
+    { field: "company", headerName: "Company", flex: 1, minWidth: 150, filterOperators: strOps },
     { field: "sector", headerName: "Sector", width: 120, filterOperators: strOps },
     { field: "cmpTarget", headerName: "CMP & Target", width: 130, filterOperators: strOps },
     {
       field: "recommendation", headerName: "Rec.", width: 100, filterOperators: strOps,
       renderCell: (p: GridRenderCellParams) => p.value
-        ? <Chip label={p.value as string} color={REC_COLOR[p.value as string] ?? "default"} size="small" sx={{ fontWeight: 600, fontSize: 12 }} />
+        ? <Chip label={p.value as string} size="small" sx={{ fontWeight: 600, fontSize: 12, ...REC_CHIP_SX[p.value as string] }} />
         : null,
     },
     { field: "analystName", headerName: "Buy Side Person", width: 160, filterOperators: strOps },
     { field: "buySideAnalystDesignation", headerName: "Buy Side Person Designation", width: 200, filterOperators: strOps },
-    { field: "rationale", headerName: "Rationale", width: 200, filterOperators: strOps },
-    { field: "feedback", headerName: "Feedback", width: 200, filterOperators: strOps },
-    { field: "others", headerName: "Others", width: 200, filterOperators: strOps },
+    {
+      field: "rationale", headerName: "Rationale", width: 200, filterOperators: strOps,
+      renderCell: (p: GridRenderCellParams) => <LongTextCell value={p.value as string} />,
+    },
+    {
+      field: "feedback", headerName: "Feedback", width: 200, filterOperators: strOps,
+      renderCell: (p: GridRenderCellParams) => <LongTextCell value={p.value as string} />,
+    },
+    {
+      field: "others", headerName: "Others", width: 200, filterOperators: strOps,
+      renderCell: (p: GridRenderCellParams) => <LongTextCell value={p.value as string} />,
+    },
     {
       field: "isShared", headerName: "Shared", width: 160, filterOperators: strOps,
       renderCell: (p: GridRenderCellParams) => p.row.isShared ? (
@@ -281,6 +347,62 @@ export default function UserSubmissionsTable({
         </div>
       )}
 
+      {/* Row detail modal */}
+      {selectedRow && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4" onClick={() => setSelectedRow(null)}>
+          <div className="bg-white rounded-2xl shadow-xl p-6 max-w-2xl w-full max-h-[85vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-start justify-between mb-5 gap-3">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-full bg-brand-100 text-brand-800 font-semibold text-sm flex items-center justify-center shrink-0 mt-0.5">
+                  {(selectedRow.formType === "institution" ? selectedRow.clientName : selectedRow.company || "?").charAt(0).toUpperCase()}
+                </div>
+                <div>
+                  <h3 className="text-base font-semibold text-gray-900">
+                    {selectedRow.formType === "institution" ? selectedRow.clientName : selectedRow.company || "Submission details"}
+                  </h3>
+                  <div className="flex items-center gap-2 mt-1.5 flex-wrap">
+                    <Chip
+                      label={selectedRow.formType === "institution" ? "Institution" : "Research"}
+                      size="small"
+                      sx={{ fontWeight: 600, fontSize: 12, ...TYPE_CHIP_SX[selectedRow.formType] }}
+                    />
+                    {selectedRow.recommendation && (
+                      <Chip label={selectedRow.recommendation} size="small" sx={{ fontWeight: 600, fontSize: 12, ...REC_CHIP_SX[selectedRow.recommendation] }} />
+                    )}
+                    {selectedRow.isShared ? (
+                      <Chip label={`Shared by ${selectedRow.sharedByName}`} size="small" sx={{ fontWeight: 600, fontSize: 11, bgcolor: "#fef3c7", color: "#b45309" }} />
+                    ) : (
+                      <Chip label="Mine" size="small" sx={{ fontWeight: 600, fontSize: 11, bgcolor: "#f3f4f6", color: "#4b5563" }} />
+                    )}
+                  </div>
+                </div>
+              </div>
+              <button onClick={() => setSelectedRow(null)} className="text-gray-400 hover:text-gray-600 shrink-0">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+              </button>
+            </div>
+            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Details</p>
+            <div className="bg-gray-50 rounded-xl border border-gray-100 p-4 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+              {FIELD_LABELS.map(([field, label]) => (
+                <div key={field}>
+                  <p className="text-gray-400 uppercase tracking-wide font-medium mb-0.5" style={{ fontSize: 10 }}>{label}</p>
+                  <p className="text-sm text-gray-800 whitespace-pre-wrap break-words">{selectedRow[field] || "—"}</p>
+                </div>
+              ))}
+            </div>
+            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mt-6 mb-3 pt-5 border-t border-gray-100">Notes</p>
+            <div className="space-y-3">
+              {LONG_FIELD_LABELS.map(([field, label]) => (
+                <div key={field} className="bg-gray-50 rounded-xl border-l-4 border-brand-200 px-4 py-3">
+                  <p className="text-gray-400 uppercase tracking-wide font-medium mb-1" style={{ fontSize: 10 }}>{label}</p>
+                  <p className="text-sm text-gray-800 whitespace-pre-wrap break-words">{selectedRow[field] || "—"}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
         {/* Header */}
         <div className="px-4 sm:px-6 py-4 sm:py-5 border-b border-gray-100">
@@ -317,20 +439,30 @@ export default function UserSubmissionsTable({
 
         {/* Desktop DataGrid */}
         <div className="hidden md:block">
-          <Box sx={{ width: "100%", height: 600 }}>
+          <Box sx={{ width: "100%" }}>
             <DataGrid
               rows={scopedRows} columns={columns} loading={loading} pageSizeOptions={[25, 50, 100]}
-              initialState={{ pagination: { paginationModel: { pageSize: 25 } } }}
+              autoHeight
+              initialState={{
+                pagination: { paginationModel: { pageSize: 25 } },
+                columns: { columnVisibilityModel: DEFAULT_COLUMN_VISIBILITY },
+              }}
               filterModel={filterModel} onFilterModelChange={handleFilterModelChange}
               slots={{ toolbar: Toolbar }}
               disableRowSelectionOnClick
-              getRowClassName={(p) => p.row.isShared ? "shared-row" : ""}
+              onRowClick={(params) => setSelectedRow(params.row as Row)}
+              getRowClassName={(p) => p.row.isShared ? "shared-row" : (p.indexRelativeToCurrentPage % 2 === 0 ? "" : "row-alt")}
               sx={{
                 border: 0,
-                "& .MuiDataGrid-columnHeaders": { backgroundColor: headerBg, fontWeight: 700, fontSize: 13 },
-                "& .MuiDataGrid-cell": { fontSize: 13 },
+                "& .MuiDataGrid-columnHeaders": { backgroundColor: headerBg, fontWeight: 700, fontSize: 13, color: "#1e293b" },
+                "& .MuiDataGrid-cell": { fontSize: 13, color: "#374151" },
+                "& .MuiDataGrid-cell:focus, & .MuiDataGrid-cell:focus-within": { outline: "none" },
+                "& .MuiDataGrid-row": { cursor: "pointer" },
                 "& .MuiDataGrid-toolbarContainer": { borderBottom: "1px solid #e5e7eb" },
+                "& .row-alt": { backgroundColor: "#FAFBFA" },
                 "& .shared-row": { backgroundColor: "#fffbeb" },
+                "& .MuiDataGrid-row:hover, & .row-alt:hover": { backgroundColor: "#EAF7EC" },
+                "& .shared-row:hover": { backgroundColor: "#fef3c7" },
               }}
             />
           </Box>
@@ -380,12 +512,12 @@ export default function UserSubmissionsTable({
                           {r.formType === "institution" ? (
                             <>
                               <span className="font-semibold text-gray-900 text-sm">{r.clientName}</span>
-                              <span className="text-xs px-2 py-0.5 rounded-full font-semibold bg-purple-100 text-purple-700">Institution</span>
+                              <span className="text-xs px-2 py-0.5 rounded-full font-semibold bg-slate-200 text-slate-700">Institution</span>
                             </>
                           ) : (
                             <>
                               <span className="font-semibold text-gray-900 text-sm">{r.company || "—"}</span>
-                              <span className="text-xs px-2 py-0.5 rounded-full font-semibold bg-blue-100 text-blue-700">Research</span>
+                              <span className="text-xs px-2 py-0.5 rounded-full font-semibold bg-slate-100 text-slate-600">Research</span>
                               {r.recommendation && <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${REC_STYLES[r.recommendation]}`}>{r.recommendation}</span>}
                             </>
                           )}

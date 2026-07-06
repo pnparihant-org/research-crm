@@ -128,7 +128,7 @@ export default function AssignClients() {
 
   if (loading) return (
     <div className="bg-white rounded-2xl border border-gray-200 p-16 flex flex-col items-center">
-      <div className="w-8 h-8 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin mb-3" />
+      <div className="w-8 h-8 border-2 border-brand-600 border-t-transparent rounded-full animate-spin mb-3" />
       <p className="text-sm text-gray-400">Loading users…</p>
     </div>
   );
@@ -166,7 +166,7 @@ export default function AssignClients() {
           placeholder="Find a user by name or email…"
           value={userSearch}
           onChange={e => setUserSearch(e.target.value)}
-          className="w-full pl-10 pr-9 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
+          className="w-full pl-10 pr-9 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 transition-colors"
         />
         {userSearch && (
           <button
@@ -215,7 +215,7 @@ export default function AssignClients() {
                     <div className="flex items-center gap-1.5 flex-wrap leading-none mb-0.5">
                       <span className="font-semibold text-gray-900 text-sm">{user.name}</span>
                       {isSelf && (
-                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-700 uppercase tracking-wider">You</span>
+                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-brand-100 text-brand-700 uppercase tracking-wider">You</span>
                       )}
                       {(user.role === "admin" || user.role === "master_admin") && (
                         <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 uppercase tracking-wider">
@@ -235,7 +235,7 @@ export default function AssignClients() {
                         {user.assignedClients.slice(0, 2).map(ac => (
                           <span
                             key={ac.client._id}
-                            className="text-xs bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-md font-medium max-w-[90px] truncate"
+                            className="text-xs bg-brand-50 text-brand-600 px-2 py-0.5 rounded-md font-medium max-w-[90px] truncate"
                             title={ac.client.name}
                           >
                             {ac.client.name}
@@ -252,7 +252,7 @@ export default function AssignClients() {
                   <span className={`text-xs px-2.5 py-1 rounded-full font-semibold tabular-nums shrink-0 ${
                     user.assignedClients.length === 0
                       ? "bg-gray-100 text-gray-400"
-                      : "bg-indigo-50 text-indigo-700"
+                      : "bg-brand-50 text-brand-700"
                   }`}>
                     {user.assignedClients.length}
                   </span>
@@ -261,7 +261,7 @@ export default function AssignClients() {
                   <button
                     type="button"
                     onClick={e => { e.stopPropagation(); setHistoryTarget(user); }}
-                    className="text-xs text-gray-400 hover:text-indigo-600 font-medium transition-colors whitespace-nowrap shrink-0"
+                    className="text-xs text-gray-400 hover:text-brand-600 font-medium transition-colors whitespace-nowrap shrink-0"
                     title="View submission history"
                   >
                     History
@@ -293,7 +293,7 @@ export default function AssignClients() {
                           onChange={e => { setClientQuery(e.target.value); setShowClientDropdown(true); }}
                           onFocus={() => { if (clientQuery) setShowClientDropdown(true); }}
                           placeholder="Search by client name or code…"
-                          className="w-full pl-9 pr-9 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
+                          className="w-full pl-9 pr-9 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 transition-colors"
                           autoComplete="off"
                         />
                         {clientQuery && (
@@ -325,11 +325,11 @@ export default function AssignClients() {
                                       key={client._id}
                                       onMouseDown={() => !isSaving && selectClient(user, client)}
                                       className={`flex items-center justify-between gap-3 px-4 py-2.5 cursor-pointer border-b border-gray-50 last:border-0 transition-colors ${
-                                        assigned ? "bg-indigo-50/60" : "hover:bg-gray-50"
+                                        assigned ? "bg-brand-50/60" : "hover:bg-gray-50"
                                       }`}
                                     >
                                       <div className="flex items-center gap-2 min-w-0">
-                                        <span className={`text-sm font-medium truncate ${assigned ? "text-indigo-900" : "text-gray-800"}`}>
+                                        <span className={`text-sm font-medium truncate ${assigned ? "text-brand-900" : "text-gray-800"}`}>
                                           {client.name}
                                         </span>
                                         {client.code && (
@@ -340,9 +340,9 @@ export default function AssignClients() {
                                       </div>
                                       <div className="shrink-0">
                                         {isSaving ? (
-                                          <div className="w-4 h-4 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
+                                          <div className="w-4 h-4 border-2 border-brand-400 border-t-transparent rounded-full animate-spin" />
                                         ) : assigned ? (
-                                          <div className="flex items-center gap-1 text-indigo-500">
+                                          <div className="flex items-center gap-1 text-brand-500">
                                             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                                               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                                             </svg>
@@ -389,21 +389,21 @@ export default function AssignClients() {
                             return (
                               <span
                                 key={ac.client._id}
-                                className="inline-flex items-center gap-1.5 pl-2.5 pr-1.5 py-1 rounded-lg border border-indigo-100 bg-white text-indigo-800 text-xs font-medium"
+                                className="inline-flex items-center gap-1.5 pl-2.5 pr-1.5 py-1 rounded-lg border border-brand-100 bg-white text-brand-800 text-xs font-medium"
                                 title={`Assigned by ${ac.assignedByName} · ${fmtDate(ac.assignedAt)}`}
                               >
                                 <span>{ac.client.name}</span>
                                 {ac.client.code && (
-                                  <span className="font-mono text-[9px] text-indigo-300">{ac.client.code}</span>
+                                  <span className="font-mono text-[9px] text-brand-300">{ac.client.code}</span>
                                 )}
                                 <button
                                   type="button"
                                   onClick={() => toggle(user, ac.client)}
                                   disabled={isSaving}
-                                  className="ml-0.5 w-4 h-4 rounded flex items-center justify-center text-indigo-300 hover:text-red-500 hover:bg-red-50 transition-colors disabled:opacity-40"
+                                  className="ml-0.5 w-4 h-4 rounded flex items-center justify-center text-brand-300 hover:text-red-500 hover:bg-red-50 transition-colors disabled:opacity-40"
                                 >
                                   {isSaving ? (
-                                    <div className="w-2.5 h-2.5 border border-indigo-400 border-t-transparent rounded-full animate-spin" />
+                                    <div className="w-2.5 h-2.5 border border-brand-400 border-t-transparent rounded-full animate-spin" />
                                   ) : (
                                     <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                                       <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />

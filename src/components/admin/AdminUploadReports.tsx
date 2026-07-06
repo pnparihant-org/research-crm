@@ -121,10 +121,10 @@ export default function AdminUploadReports() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-indigo-700 rounded-2xl px-8 py-6 text-white">
-        <p className="text-sm font-medium text-indigo-200 uppercase tracking-widest mb-1">Admin</p>
+      <div className="bg-brand-700 rounded-2xl px-8 py-6 text-white">
+        <p className="text-sm font-medium text-brand-200 uppercase tracking-widest mb-1">Admin</p>
         <h1 className="text-2xl font-bold">Upload Reports</h1>
-        <p className="text-indigo-100 text-sm mt-1">Upload PDF reports and view upload history</p>
+        <p className="text-brand-100 text-sm mt-1">Upload PDF reports and view upload history</p>
       </div>
 
       {/* Upload area */}
@@ -133,7 +133,7 @@ export default function AdminUploadReports() {
 
         <div
           className={`relative border-2 border-dashed rounded-xl p-10 flex flex-col items-center justify-center gap-3 cursor-pointer transition-colors ${
-            dragging ? "border-indigo-500 bg-indigo-50" : "border-gray-200 hover:border-indigo-400 hover:bg-gray-50"
+            dragging ? "border-brand-500 bg-brand-50" : "border-gray-200 hover:border-brand-400 hover:bg-gray-50"
           }`}
           onClick={() => fileInputRef.current?.click()}
           onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
@@ -160,7 +160,7 @@ export default function AdminUploadReports() {
         </div>
 
         {uploading && (
-          <div className="flex items-center gap-2 text-indigo-700 text-sm">
+          <div className="flex items-center gap-2 text-brand-700 text-sm">
             <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
@@ -200,9 +200,9 @@ export default function AdminUploadReports() {
               placeholder="Search by name or filename…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 w-56"
+              className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-300 w-56"
             />
-            <button onClick={fetchReports} className="text-xs text-indigo-600 hover:text-indigo-800 font-medium px-3 py-1.5 rounded-lg border border-indigo-100 hover:bg-indigo-50 transition-colors">
+            <button onClick={fetchReports} className="text-xs text-brand-600 hover:text-brand-800 font-medium px-3 py-1.5 rounded-lg border border-brand-100 hover:bg-brand-50 transition-colors">
               Refresh
             </button>
           </div>
@@ -225,7 +225,7 @@ export default function AdminUploadReports() {
                   <div className="min-w-0">
                     <p className="text-sm font-medium text-gray-900 truncate">{r.filename}</p>
                     <div className="flex items-center gap-2 mt-0.5 flex-wrap">
-                      <span className="text-xs font-medium text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-full">
+                      <span className="text-xs font-medium text-brand-700 bg-brand-50 px-2 py-0.5 rounded-full">
                         {r.adminName}
                       </span>
                       <span className="text-xs text-gray-400">{r.adminEmail}</span>
@@ -240,7 +240,7 @@ export default function AdminUploadReports() {
                   <a
                     href={`/api/admin/reports/history/${r._id}`}
                     download={r.filename}
-                    className="text-xs text-indigo-600 hover:text-indigo-800 font-medium px-3 py-1.5 rounded-lg border border-indigo-200 hover:bg-indigo-50 transition-colors"
+                    className="text-xs text-brand-600 hover:text-brand-800 font-medium px-3 py-1.5 rounded-lg border border-brand-200 hover:bg-brand-50 transition-colors"
                   >
                     Download
                   </a>

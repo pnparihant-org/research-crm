@@ -88,7 +88,7 @@ export default function History() {
 
   if (loading) return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-12 text-center">
-      <div className="w-8 h-8 border-2 border-teal-600 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+      <div className="w-8 h-8 border-2 border-brand-600 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
       <p className="text-gray-500">Loading submissions...</p>
     </div>
   );
@@ -106,10 +106,10 @@ export default function History() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
             <input type="text" placeholder="Search by company, client, executive…" value={search} onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" />
+              className="w-full pl-9 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" />
           </div>
           <select value={filterRec} onChange={(e) => setFilterRec(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 bg-white">
+            className="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white">
             <option value="">All Recommendations</option>
             <option value="Buy">Buy</option>
             <option value="Sell">Sell</option>
@@ -138,7 +138,7 @@ export default function History() {
                       {s.formType === "institution" ? (
                         <>
                           <span className="font-semibold text-gray-900">{s.clientName}</span>
-                          <span className="text-xs bg-purple-50 text-purple-600 px-2 py-0.5 rounded-full font-medium">Institution</span>
+                          <span className="text-xs bg-brand-50 text-brand-600 px-2 py-0.5 rounded-full font-medium">Institution</span>
                         </>
                       ) : (
                         <>

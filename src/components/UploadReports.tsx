@@ -95,10 +95,10 @@ export default function UploadReports() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-teal-700 rounded-2xl px-8 py-6 text-white">
-        <p className="text-sm font-medium text-teal-200 uppercase tracking-widest mb-1">Arihant Capital Markets</p>
+      <div className="bg-brand-700 rounded-2xl px-8 py-6 text-white">
+        <p className="text-sm font-medium text-brand-200 uppercase tracking-widest mb-1">Arihant Capital Markets</p>
         <h1 className="text-2xl font-bold">Upload Reports</h1>
-        <p className="text-teal-100 text-sm mt-1">Upload PDF reports — no expiry, accessible any time</p>
+        <p className="text-brand-100 text-sm mt-1">Upload PDF reports — no expiry, accessible any time</p>
       </div>
 
       {/* Upload area */}
@@ -107,7 +107,7 @@ export default function UploadReports() {
 
         <div
           className={`relative border-2 border-dashed rounded-xl p-10 flex flex-col items-center justify-center gap-3 cursor-pointer transition-colors ${
-            dragging ? "border-teal-500 bg-teal-50" : "border-gray-200 hover:border-teal-400 hover:bg-gray-50"
+            dragging ? "border-brand-500 bg-brand-50" : "border-gray-200 hover:border-brand-400 hover:bg-gray-50"
           }`}
           onClick={() => fileInputRef.current?.click()}
           onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
@@ -134,7 +134,7 @@ export default function UploadReports() {
         </div>
 
         {uploading && (
-          <div className="flex items-center gap-2 text-teal-700 text-sm">
+          <div className="flex items-center gap-2 text-brand-700 text-sm">
             <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
@@ -153,7 +153,7 @@ export default function UploadReports() {
         )}
 
         {success && (
-          <div className="flex items-center gap-2 bg-teal-50 border border-teal-100 rounded-lg px-4 py-3 text-teal-700 text-sm">
+          <div className="flex items-center gap-2 bg-brand-50 border border-brand-100 rounded-lg px-4 py-3 text-brand-700 text-sm">
             <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
@@ -188,7 +188,7 @@ export default function UploadReports() {
                 <a
                   href={`/api/reports/${r._id}`}
                   download={r.filename}
-                  className="shrink-0 text-xs text-teal-600 hover:text-teal-800 font-medium px-3 py-1.5 rounded-lg border border-teal-200 hover:bg-teal-50 transition-colors"
+                  className="shrink-0 text-xs text-brand-600 hover:text-brand-800 font-medium px-3 py-1.5 rounded-lg border border-brand-200 hover:bg-brand-50 transition-colors"
                 >
                   Download
                 </a>

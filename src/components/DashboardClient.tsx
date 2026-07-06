@@ -86,23 +86,20 @@ export default function DashboardClient({ session }: { session: Session }) {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200 shadow-sm">
+    <div className="min-h-screen bg-brand-50/40">
+      <header className="bg-brand-50 border-b border-brand-100 shadow-sm">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-teal-600 rounded-lg flex items-center justify-center">
-              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-              </svg>
-            </div>
-            <span className="text-xl font-bold text-gray-900">CRM</span>
+            <img src="/ACML-Logo-Green-Bg.svg" alt="Arihant Capital Markets" className="h-9 w-auto rounded-lg" />
+            <div className="w-px h-6 bg-gray-300" />
+            <span className="text-sm font-semibold text-gray-600">CRM</span>
           </div>
           <div className="flex items-center gap-4">
             {/* Show Arihant Representative name prominently */}
             <div className="text-right hidden sm:block">
               <p className="text-sm font-semibold text-gray-900">{session.user.name}</p>
               
-              {designation && <p className="text-xs text-teal-600 font-medium">{designation}</p>}
+              {designation && <p className="text-xs text-brand-600 font-medium">{designation}</p>}
             </div>
             <button
               onClick={async () => { await signOut({ redirect: false }); window.location.href = "/auth/login"; }}
@@ -115,14 +112,14 @@ export default function DashboardClient({ session }: { session: Session }) {
       </header>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-6">
-        <div className="flex gap-1 bg-white rounded-xl p-1 shadow-sm border border-gray-200 overflow-x-auto">
+        <div className="flex gap-1 bg-white rounded-xl p-1 shadow-sm border border-gray-200 overflow-x-auto scrollbar-none">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium whitespace-nowrap shrink-0 transition-all ${
                 activeTab === tab.id
-                  ? "bg-teal-600 text-white shadow-sm"
+                  ? "bg-brand-600 text-white shadow-sm"
                   : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
               }`}
             >

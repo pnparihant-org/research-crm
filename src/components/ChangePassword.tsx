@@ -54,8 +54,8 @@ export default function ChangePassword({ accentColor = "teal" }: { accentColor?:
   const [show, setShow] = useState({ current: false, new: false, confirm: false });
   const [loading, setLoading] = useState(false);
 
-  const ring = { teal: "focus:ring-teal-500", indigo: "focus:ring-indigo-500", purple: "focus:ring-purple-500" }[accentColor];
-  const btn  = { teal: "bg-teal-700 hover:bg-teal-800 disabled:bg-teal-400", indigo: "bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400", purple: "bg-purple-700 hover:bg-purple-800 disabled:bg-purple-400" }[accentColor];
+  const ring = { teal: "focus:ring-brand-500", indigo: "focus:ring-brand-500", purple: "focus:ring-brand-500" }[accentColor];
+  const btn  = { teal: "bg-brand-700 hover:bg-brand-800 disabled:bg-brand-400", indigo: "bg-brand-600 hover:bg-brand-700 disabled:bg-brand-400", purple: "bg-brand-700 hover:bg-brand-800 disabled:bg-brand-400" }[accentColor];
   const inputCls = `w-full px-3.5 py-2.5 pr-10 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 ${ring} focus:border-transparent`;
 
   async function handleSubmit(e: React.FormEvent) {

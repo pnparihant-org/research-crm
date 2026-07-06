@@ -78,10 +78,10 @@ export default function AdminReports() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-indigo-700 rounded-2xl px-8 py-6 text-white">
-        <p className="text-sm font-medium text-indigo-200 uppercase tracking-widest mb-1">Admin View</p>
+      <div className="bg-brand-700 rounded-2xl px-8 py-6 text-white">
+        <p className="text-sm font-medium text-brand-200 uppercase tracking-widest mb-1">Admin View</p>
         <h1 className="text-2xl font-bold">User Reports</h1>
-        <p className="text-indigo-100 text-sm mt-1">Browse and download PDF reports uploaded by your team</p>
+        <p className="text-brand-100 text-sm mt-1">Browse and download PDF reports uploaded by your team</p>
       </div>
 
       {/* Filters */}
@@ -92,12 +92,12 @@ export default function AdminReports() {
             placeholder="Search by name, email or filename…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex-1 border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
+            className="flex-1 border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-300"
           />
           <select
             value={selectedUser ?? ""}
             onChange={(e) => setSelectedUser(e.target.value || null)}
-            className="border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
+            className="border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-300"
           >
             <option value="">All users</option>
             {users.map((u) => (
@@ -121,7 +121,7 @@ export default function AdminReports() {
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
             {filteredReports.length} report{filteredReports.length !== 1 ? "s" : ""}
           </p>
-          <button onClick={fetchReports} className="text-xs text-indigo-600 hover:text-indigo-800 font-medium">
+          <button onClick={fetchReports} className="text-xs text-brand-600 hover:text-brand-800 font-medium">
             Refresh
           </button>
         </div>
@@ -143,7 +143,7 @@ export default function AdminReports() {
                   <div className="min-w-0">
                     <p className="text-sm font-medium text-gray-900 truncate">{r.filename}</p>
                     <div className="flex items-center gap-2 mt-0.5 flex-wrap">
-                      <span className="text-xs font-medium text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-full">
+                      <span className="text-xs font-medium text-brand-700 bg-brand-50 px-2 py-0.5 rounded-full">
                         {r.userName}
                       </span>
                       <span className="text-xs text-gray-400">{r.userEmail}</span>
@@ -158,7 +158,7 @@ export default function AdminReports() {
                   <a
                     href={`/api/reports/${r._id}`}
                     download={r.filename}
-                    className="text-xs text-indigo-600 hover:text-indigo-800 font-medium px-3 py-1.5 rounded-lg border border-indigo-200 hover:bg-indigo-50 transition-colors"
+                    className="text-xs text-brand-600 hover:text-brand-800 font-medium px-3 py-1.5 rounded-lg border border-brand-200 hover:bg-brand-50 transition-colors"
                   >
                     Download
                   </a>

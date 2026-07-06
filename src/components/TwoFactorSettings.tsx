@@ -86,7 +86,7 @@ export default function TwoFactorSettings({ twoFactorEnabled }: { twoFactorEnabl
                 <button
                   onClick={startSetup}
                   disabled={loading}
-                  className="bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-semibold px-6 py-2.5 rounded-lg transition-colors"
+                  className="bg-brand-600 hover:bg-brand-700 disabled:bg-brand-400 text-white font-semibold px-6 py-2.5 rounded-lg transition-colors"
                 >
                   {loading ? "Loading..." : "Enable 2FA"}
                 </button>
@@ -125,13 +125,13 @@ export default function TwoFactorSettings({ twoFactorEnabled }: { twoFactorEnabl
                   value={otp}
                   onChange={(e) => setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
                   maxLength={6}
-                  className="px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-center text-xl tracking-widest font-mono w-40"
+                  className="px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 text-center text-xl tracking-widest font-mono w-40"
                   placeholder="000000"
                 />
                 <button
                   onClick={enableTwoFactor}
                   disabled={loading || otp.length < 6}
-                  className="bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-semibold px-6 py-2.5 rounded-lg transition-colors"
+                  className="bg-brand-600 hover:bg-brand-700 disabled:bg-brand-400 text-white font-semibold px-6 py-2.5 rounded-lg transition-colors"
                 >
                   {loading ? "Verifying..." : "Confirm & Enable"}
                 </button>

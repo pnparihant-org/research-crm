@@ -5,9 +5,9 @@ import { useToast } from "@/components/ui/Toast";
 // Cycles through a fixed palette for any number of dynamic categories
 const COLOR_PALETTE = [
   "bg-blue-50 text-blue-700 border-blue-200",
-  "bg-purple-50 text-purple-700 border-purple-200",
+  "bg-brand-50 text-brand-700 border-brand-200",
   "bg-amber-50 text-amber-700 border-amber-200",
-  "bg-teal-50 text-teal-700 border-teal-200",
+  "bg-brand-50 text-brand-700 border-brand-200",
   "bg-rose-50 text-rose-700 border-rose-200",
   "bg-green-50 text-green-700 border-green-200",
   "bg-orange-50 text-orange-700 border-orange-200",
@@ -198,7 +198,7 @@ export default function ManageClients() {
                 <select
                   value={editCategory}
                   onChange={(e) => setEditCategory(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 appearance-none bg-white"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 appearance-none bg-white"
                 >
                   {catNames.map((c) => <option key={c}>{c}</option>)}
                 </select>
@@ -208,12 +208,12 @@ export default function ManageClients() {
                 <input
                   type="text" required value={editName}
                   onChange={(e) => setEditName(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
                 />
               </div>
               <div className="flex gap-3 pt-1 justify-end">
                 <button type="button" onClick={() => setEditTarget(null)} className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">Cancel</button>
-                <button type="submit" disabled={editSaving} className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white text-sm font-medium rounded-lg transition-colors">
+                <button type="submit" disabled={editSaving} className="px-5 py-2 bg-brand-600 hover:bg-brand-700 disabled:bg-brand-400 text-white text-sm font-medium rounded-lg transition-colors">
                   {editSaving ? "Saving…" : "Save Changes"}
                 </button>
               </div>
@@ -269,7 +269,7 @@ export default function ManageClients() {
               <button
                 onClick={() => { setShowAdd((v) => !v); setAddName(""); setAddCategory(catNames[0] ?? ""); }}
                 disabled={catNames.length === 0}
-                className="flex items-center gap-2 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 text-white text-sm font-medium rounded-lg transition-colors"
+                className="flex items-center gap-2 px-3 py-2 bg-brand-600 hover:bg-brand-700 disabled:bg-brand-300 text-white text-sm font-medium rounded-lg transition-colors"
               >
                 <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -318,12 +318,12 @@ export default function ManageClients() {
                   value={newCatName}
                   onChange={(e) => setNewCatName(e.target.value)}
                   placeholder="New category name"
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
                 />
                 <button
                   type="submit"
                   disabled={addingCat || !newCatName.trim()}
-                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 text-white text-sm font-medium rounded-lg transition-colors"
+                  className="px-4 py-2 bg-brand-600 hover:bg-brand-700 disabled:bg-brand-300 text-white text-sm font-medium rounded-lg transition-colors"
                 >
                   {addingCat ? "Adding…" : "Add"}
                 </button>
@@ -341,7 +341,7 @@ export default function ManageClients() {
                   <select
                     value={addCategory}
                     onChange={(e) => setAddCategory(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 appearance-none bg-white"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 appearance-none bg-white"
                   >
                     {catNames.map((c) => <option key={c}>{c}</option>)}
                   </select>
@@ -352,12 +352,12 @@ export default function ManageClients() {
                     type="text" required value={addName}
                     onChange={(e) => setAddName(e.target.value)}
                     placeholder="Full client / fund name"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
                   />
                 </div>
               </div>
               <div className="flex gap-3">
-                <button type="submit" disabled={addSaving} className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white text-sm font-medium rounded-lg transition-colors">
+                <button type="submit" disabled={addSaving} className="px-5 py-2 bg-brand-600 hover:bg-brand-700 disabled:bg-brand-400 text-white text-sm font-medium rounded-lg transition-colors">
                   {addSaving ? "Adding…" : "Add Client"}
                 </button>
                 <button type="button" onClick={() => setShowAdd(false)} className="px-5 py-2 text-gray-500 hover:text-gray-700 text-sm font-medium">Cancel</button>
@@ -374,13 +374,13 @@ export default function ManageClients() {
               <input
                 type="text" placeholder="Search clients…" value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="pl-9 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 w-full"
+                className="pl-9 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 w-full"
               />
             </div>
             <select
               value={filterCat}
               onChange={(e) => setFilterCat(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 appearance-none bg-white"
+              className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 appearance-none bg-white"
             >
               <option value="all">All Categories</option>
               {catNames.map((c) => <option key={c} value={c}>{c}</option>)}
@@ -418,8 +418,8 @@ export default function ManageClients() {
                       {list.map((c) => (
                         <li key={c._id} className="flex items-center justify-between px-5 py-3 hover:bg-gray-50 transition-colors group">
                           <span className="text-sm text-gray-800 font-medium">{c.name}</span>
-                          <div className="flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <button onClick={() => openEdit(c)} className="text-xs text-indigo-500 hover:text-indigo-700 font-medium">Edit</button>
+                          <div className="flex items-center gap-3">
+                            <button onClick={() => openEdit(c)} className="text-xs text-brand-500 hover:text-brand-700 font-medium">Edit</button>
                             <button onClick={() => setDeleteTarget(c)} className="text-xs text-red-400 hover:text-red-600 font-medium">Delete</button>
                           </div>
                         </li>
@@ -444,8 +444,8 @@ export default function ManageClients() {
                         <span className="text-sm text-gray-800 font-medium">{c.name}</span>
                         <span className="ml-2 text-xs text-gray-400">({c.category})</span>
                       </div>
-                      <div className="flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button onClick={() => openEdit(c)} className="text-xs text-indigo-500 hover:text-indigo-700 font-medium">Edit</button>
+                      <div className="flex items-center gap-3">
+                        <button onClick={() => openEdit(c)} className="text-xs text-brand-500 hover:text-brand-700 font-medium">Edit</button>
                         <button onClick={() => setDeleteTarget(c)} className="text-xs text-red-400 hover:text-red-600 font-medium">Delete</button>
                       </div>
                     </li>

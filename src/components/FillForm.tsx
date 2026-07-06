@@ -176,10 +176,10 @@ function FormPanel({
     setTimeout(() => onSubmitted(), 1000);
   }
 
-  const inputCls = "w-full px-3.5 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-gray-700 text-sm bg-white placeholder:text-gray-400 transition-shadow";
+  const inputCls = "w-full px-3.5 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-gray-700 text-sm bg-white placeholder:text-gray-400 transition-shadow";
 
   const Badge = ({ n }: { n: number }) => (
-    <span className="flex h-5 w-5 items-center justify-center rounded bg-teal-600 text-[10px] font-bold text-white shrink-0">{n}</span>
+    <span className="flex h-5 w-5 items-center justify-center rounded bg-brand-600 text-[10px] font-bold text-white shrink-0">{n}</span>
   );
 
   const SectionLabel = ({ title }: { title: string }) => (
@@ -270,12 +270,12 @@ function FormPanel({
                     />
                   </div>
                 ) : form.clientName ? (
-                  <div className="flex items-center gap-2 px-3.5 py-2.5 border border-teal-400 rounded-lg bg-teal-50 text-sm text-teal-800 font-medium">
-                    <svg className="w-4 h-4 text-teal-600 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <div className="flex items-center gap-2 px-3.5 py-2.5 border border-brand-400 rounded-lg bg-brand-50 text-sm text-brand-800 font-medium">
+                    <svg className="w-4 h-4 text-brand-600 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                     <span className="flex-1 truncate">{form.clientName}</span>
-                    <button type="button" onClick={clearClient} className="text-teal-500 hover:text-red-500 transition-colors ml-1 shrink-0">
+                    <button type="button" onClick={clearClient} className="text-brand-500 hover:text-red-500 transition-colors ml-1 shrink-0">
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                       </svg>
@@ -296,7 +296,7 @@ function FormPanel({
                     />
                     <p className="text-xs text-gray-400 mt-1">
                       Client not listed?{" "}
-                      <button type="button" onClick={() => selectClientOthers()} className="text-teal-600 hover:text-teal-700 font-medium underline">
+                      <button type="button" onClick={() => selectClientOthers()} className="text-brand-600 hover:text-brand-700 font-medium underline">
                         Select Others
                       </button>
                     </p>
@@ -306,7 +306,7 @@ function FormPanel({
                           <li
                             key={c._id}
                             onMouseDown={() => selectClient(c)}
-                            className="px-3.5 py-2.5 hover:bg-teal-50 cursor-pointer border-b border-gray-100 last:border-0 font-medium text-gray-800"
+                            className="px-3.5 py-2.5 hover:bg-brand-50 cursor-pointer border-b border-gray-100 last:border-0 font-medium text-gray-800"
                           >
                             {c.name}
                           </li>
@@ -362,7 +362,7 @@ function FormPanel({
                   return (
                     <label key={mode} className="cursor-pointer">
                       <input type="radio" name="modeOfCommunication" value={mode} checked={active} onChange={handleChange} className="sr-only" />
-                      <div className={`flex items-center gap-2 px-4 py-3 sm:py-2 rounded-lg border-2 text-sm font-medium transition-all select-none ${active ? "border-teal-600 bg-teal-50 text-teal-700" : "border-gray-300 text-gray-600 hover:border-teal-400"}`}>
+                      <div className={`flex items-center gap-2 px-4 py-3 sm:py-2 rounded-lg border-2 text-sm font-medium transition-all select-none ${active ? "border-brand-600 bg-brand-50 text-brand-700" : "border-gray-300 text-gray-600 hover:border-brand-400"}`}>
                         {mode === "Phone" && (
                           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -427,12 +427,12 @@ function FormPanel({
                       />
                     </div>
                   ) : stockSelected ? (
-                    <div className="flex items-center gap-2 px-3.5 py-2.5 border border-teal-400 rounded-lg bg-teal-50 text-sm text-teal-800 font-medium">
-                      <svg className="w-4 h-4 text-teal-600 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <div className="flex items-center gap-2 px-3.5 py-2.5 border border-brand-400 rounded-lg bg-brand-50 text-sm text-brand-800 font-medium">
+                      <svg className="w-4 h-4 text-brand-600 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
                       <span className="flex-1 truncate">{stockQuery}</span>
-                      <button type="button" onClick={clearStock} className="text-teal-500 hover:text-red-500 transition-colors ml-1 shrink-0">
+                      <button type="button" onClick={clearStock} className="text-brand-500 hover:text-red-500 transition-colors ml-1 shrink-0">
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                         </svg>
@@ -470,7 +470,7 @@ function FormPanel({
                             <li
                               key={s.StockName}
                               onMouseDown={() => selectStock(s)}
-                              className="flex items-center justify-between px-3.5 py-2.5 hover:bg-teal-50 cursor-pointer border-b border-gray-100 last:border-0"
+                              className="flex items-center justify-between px-3.5 py-2.5 hover:bg-brand-50 cursor-pointer border-b border-gray-100 last:border-0"
                             >
                               <span className="font-medium text-gray-800">{s.StockName}</span>
                               {s.sect_name && <span className="text-xs text-gray-400 ml-2 shrink-0">{s.sect_name}</span>}
@@ -509,7 +509,7 @@ function FormPanel({
               <div className="space-y-1.5">
                 <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
                   <Badge n={9} /> Sector
-                  {stockSelected && <span className="text-xs text-teal-600 font-normal">(auto-filled)</span>}
+                  {stockSelected && <span className="text-xs text-brand-600 font-normal">(auto-filled)</span>}
                 </label>
                 <input
                   type="text"
@@ -544,11 +544,11 @@ function FormPanel({
                 {(["Buy", "Sell", "Hold"] as const).map((opt) => {
                   const active = form.recommendation === opt;
                   const styles = {
-                    Buy:  active ? "border-teal-600 bg-teal-50 text-teal-700"  : "border-gray-300 text-gray-600 hover:border-teal-400",
+                    Buy:  active ? "border-brand-600 bg-brand-50 text-brand-700"  : "border-gray-300 text-gray-600 hover:border-brand-400",
                     Sell: active ? "border-red-500 bg-red-50 text-red-700"     : "border-gray-300 text-gray-600 hover:border-red-400",
                     Hold: active ? "border-gray-500 bg-gray-100 text-gray-700" : "border-gray-300 text-gray-600 hover:border-gray-500",
                   };
-                  const dots = { Buy: active ? "bg-teal-600" : "bg-gray-300", Sell: active ? "bg-red-500" : "bg-gray-300", Hold: active ? "bg-gray-500" : "bg-gray-300" };
+                  const dots = { Buy: active ? "bg-brand-600" : "bg-gray-300", Sell: active ? "bg-red-500" : "bg-gray-300", Hold: active ? "bg-gray-500" : "bg-gray-300" };
                   return (
                     <label key={opt} className="cursor-pointer">
                       <input type="radio" name="recommendation" value={opt} checked={active} onChange={handleChange} className="sr-only" />
@@ -594,7 +594,7 @@ function FormPanel({
           <button
             type="submit"
             disabled={loading}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-teal-700 hover:bg-teal-800 disabled:bg-teal-400 disabled:cursor-not-allowed text-white font-semibold px-7 py-3 sm:py-2.5 rounded-lg text-sm transition-colors"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-brand-700 hover:bg-brand-800 disabled:bg-brand-400 disabled:cursor-not-allowed text-white font-semibold px-7 py-3 sm:py-2.5 rounded-lg text-sm transition-colors"
           >
             {loading && (
               <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
@@ -654,10 +654,10 @@ export default function FillForm({ onSubmitted, userName, isAdmin = false }: { o
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
 
-      <div className="bg-gradient-to-r from-teal-600 to-teal-500 px-4 sm:px-8 py-5 sm:py-6">
-        <p className="text-teal-200 text-xs font-semibold uppercase tracking-widest mb-1">Arihant Capital Markets</p>
+      <div className="bg-gradient-to-r from-brand-600 to-brand-500 px-4 sm:px-8 py-5 sm:py-6">
+        <p className="text-brand-200 text-xs font-semibold uppercase tracking-widest mb-1">Arihant Capital Markets</p>
         <h2 className="text-2xl font-bold text-white tracking-tight">Research Servicing Tracker</h2>
-        <p className="text-teal-100/80 text-sm mt-1">{tabs.find((t) => t.id === activeTab)?.description}</p>
+        <p className="text-brand-100/80 text-sm mt-1">{tabs.find((t) => t.id === activeTab)?.description}</p>
       </div>
 
       {/* Tab switcher */}
@@ -672,7 +672,7 @@ export default function FillForm({ onSubmitted, userName, isAdmin = false }: { o
                 onClick={() => setActiveTab(tab.id)}
                 className={`relative px-5 py-3.5 text-sm font-semibold border-b-2 transition-colors focus:outline-none ${
                   active
-                    ? "border-teal-600 text-teal-700"
+                    ? "border-brand-600 text-brand-700"
                     : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                 }`}
               >

@@ -50,12 +50,12 @@ function MasterList({
             onChange={(e) => setNewName(e.target.value)}
             onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); handleAdd(); } }}
             placeholder={`Add new ${title.toLowerCase().replace("manage ", "")}...`}
-            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
           />
           <button
             onClick={handleAdd}
             disabled={!newName.trim() || adding}
-            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 text-white text-sm font-medium rounded-lg transition-colors"
+            className="px-4 py-2 bg-brand-600 hover:bg-brand-700 disabled:bg-brand-300 text-white text-sm font-medium rounded-lg transition-colors"
           >
             {adding ? "Adding..." : "Add"}
           </button>
@@ -199,7 +199,7 @@ export default function MasterDataManager() {
           <button
             key={t.id}
             onClick={() => setTab(t.id)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${tab === t.id ? "bg-indigo-600 text-white" : "text-gray-600 hover:bg-gray-100"}`}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${tab === t.id ? "bg-brand-600 text-white" : "text-gray-600 hover:bg-gray-100"}`}
           >
             {t.label}
           </button>
@@ -225,7 +225,7 @@ export default function MasterDataManager() {
                 <select
                   value={selectedGroupId}
                   onChange={(e) => setSelectedGroupId(e.target.value)}
-                  className="w-full sm:w-72 px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full sm:w-72 px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand-500"
                 >
                   <option value="">All groups</option>
                   {companyGroups.map((g) => <option key={g._id} value={g._id}>{g.name}</option>)}
@@ -241,12 +241,12 @@ export default function MasterDataManager() {
                     onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addCompany(); } }}
                     placeholder={selectedGroupId ? "Add company to selected group..." : "Select a group first"}
                     disabled={!selectedGroupId}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-gray-50"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 disabled:bg-gray-50"
                   />
                   <button
                     onClick={addCompany}
                     disabled={!newCompanyName.trim() || !selectedGroupId || addingCompany}
-                    className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 text-white text-sm font-medium rounded-lg transition-colors"
+                    className="px-4 py-2 bg-brand-600 hover:bg-brand-700 disabled:bg-brand-300 text-white text-sm font-medium rounded-lg transition-colors"
                   >
                     {addingCompany ? "Adding..." : "Add"}
                   </button>

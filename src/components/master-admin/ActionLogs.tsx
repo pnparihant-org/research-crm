@@ -19,12 +19,12 @@ const ACTION_LABELS: Record<string, { label: string; color: string }> = {
   LOGIN:            { label: "Login",            color: "bg-green-100 text-green-700" },
   FORM_SUBMIT:      { label: "Form Submit",      color: "bg-blue-100 text-blue-700" },
   CHANGE_PASSWORD:  { label: "Change Password",  color: "bg-yellow-100 text-yellow-700" },
-  CREATE_USER:      { label: "Create User",      color: "bg-indigo-100 text-indigo-700" },
+  CREATE_USER:      { label: "Create User",      color: "bg-brand-100 text-brand-700" },
   DELETE_USER:      { label: "Delete User",      color: "bg-red-100 text-red-700" },
-  ASSIGN_CLIENT:    { label: "Assign Client",    color: "bg-teal-100 text-teal-700" },
+  ASSIGN_CLIENT:    { label: "Assign Client",    color: "bg-brand-100 text-brand-700" },
   REMOVE_CLIENT:    { label: "Remove Client",    color: "bg-orange-100 text-orange-700" },
-  CREATE_ADMIN:     { label: "Create Admin",     color: "bg-purple-100 text-purple-700" },
-  PROMOTE_TO_ADMIN:          { label: "Promote to Admin",     color: "bg-purple-100 text-purple-700" },
+  CREATE_ADMIN:     { label: "Create Admin",     color: "bg-brand-100 text-brand-700" },
+  PROMOTE_TO_ADMIN:          { label: "Promote to Admin",     color: "bg-brand-100 text-brand-700" },
   DEMOTE_TO_USER:            { label: "Demote to User",       color: "bg-gray-100 text-gray-600" },
   BULK_UPLOAD_DATE_MISMATCH: { label: "Upload Date Mismatch", color: "bg-red-100 text-red-700" },
   BULK_UPLOAD_TAMPERED:      { label: "Upload Tampered",      color: "bg-red-200 text-red-800" },
@@ -104,12 +104,12 @@ export default function ActionLogs() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && fetchLogs(1)}
-              className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 w-52"
+              className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 w-52"
             />
             <select
               value={actionFilter}
               onChange={(e) => setActionFilter(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
             >
               <option value="">All actions</option>
               {ALL_ACTIONS.map((a) => (
@@ -118,7 +118,7 @@ export default function ActionLogs() {
             </select>
             <button
               onClick={() => fetchLogs(1)}
-              className="px-4 py-2 bg-purple-700 hover:bg-purple-800 text-white text-sm font-medium rounded-lg transition-colors"
+              className="px-4 py-2 bg-brand-700 hover:bg-brand-800 text-white text-sm font-medium rounded-lg transition-colors"
             >
               Search
             </button>
@@ -138,7 +138,7 @@ export default function ActionLogs() {
       <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
         {loading ? (
           <div className="p-12 text-center">
-            <div className="w-8 h-8 border-2 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+            <div className="w-8 h-8 border-2 border-brand-600 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
             <p className="text-gray-400 text-sm">Loading logs…</p>
           </div>
         ) : logs.length === 0 ? (
