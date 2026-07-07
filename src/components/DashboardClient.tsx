@@ -90,9 +90,9 @@ export default function DashboardClient({ session }: { session: Session }) {
       <header className="bg-brand-50 border-b border-brand-100 shadow-sm">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src="/ACML-Logo-Primary-Green-Transaparent.svg" alt="Arihant Capital Markets" className="h-9 w-auto rounded-lg" />
+            <img src="/ACML-Logo-Primary-Green-Transparent.svg" alt="Arihant Capital Markets" className="h-16 w-auto rounded-lg" />
             <div className="w-px h-6 bg-gray-300" />
-            <span className="text-sm font-semibold text-gray-600">CRM</span>
+            <span className="text-lg font-semibold text-gray-600">CRM</span>
           </div>
           <div className="flex items-center gap-4">
             {/* Show Arihant Representative name prominently */}
