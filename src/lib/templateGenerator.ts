@@ -75,11 +75,17 @@ export async function generateTemplateBuffer(
   // Pre-fill the "Designation" column with the uploader's own designation so they
   // don't have to look it up in the Reference sheet — admins have no personal
   // designation to draw from, so their sheet is left blank for manual entry per row.
+  // Keyed off "Client Name" via formula so unused trailing rows stay visually blank
+  // instead of showing a designation with no other data.
   if (designation.trim()) {
     const DESIGNATION_COL = "D";
+    const CLIENT_NAME_COL = "E";
     const MAX_ENTRY_ROWS = 501; // header + up to 500 data rows, matching the bulk-upload limit
+    const escapedDesignation = designation.replace(/"/g, '""');
     for (let r = 2; r <= MAX_ENTRY_ROWS; r++) {
-      wsEntries.getCell(`${DESIGNATION_COL}${r}`).value = designation;
+      wsEntries.getCell(`${DESIGNATION_COL}${r}`).value = {
+        formula: `IF($${CLIENT_NAME_COL}${r}<>"","${escapedDesignation}","")`,
+      };
     }
   }
 

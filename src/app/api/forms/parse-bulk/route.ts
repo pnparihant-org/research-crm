@@ -112,9 +112,13 @@ const _POST = async (req: NextRequest) => {
     if (row.hidden) return; // skip rows hidden in the sheet
     const v = row.values as unknown[];
     const get = (i: number) => (i >= 1 ? v[i] ?? "" : "");
-    // Skip entirely empty rows (check all mapped columns)
-    const allCols = Object.values(colIdx);
-    if (allCols.every((i) => !cellStr(get(i)))) return;
+    // Skip entirely empty rows. Exclude "designation" — the template pre-fills it for
+    // every row so it's never blank on its own, and would otherwise make every unused
+    // trailing row look like real data.
+    const emptyCheckCols = Object.entries(colIdx)
+      .filter(([key]) => key !== "designation")
+      .map(([, i]) => i);
+    if (emptyCheckCols.every((i) => !cellStr(get(i)))) return;
     rows.push({
       date:                      parseCellDate(get(col("date"))),
       designation:               cellStr(get(col("designation"))),

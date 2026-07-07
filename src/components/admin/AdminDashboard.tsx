@@ -116,7 +116,7 @@ export default function AdminDashboard({ session }: { session: Session }) {
       <header className="bg-brand-50 border-b border-brand-100 shadow-sm">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src="/ACML-Logo-Green-Bg.svg" alt="Arihant Capital Markets" className="h-9 w-auto rounded-lg" />
+            <img src="/ACML-Logo-Primary-Green-Transaparent.svg" alt="Arihant Capital Markets" className="h-9 w-auto rounded-lg" />
             <div className="w-px h-6 bg-gray-300" />
             <div>
               <span className="text-sm font-semibold text-gray-600">CRM Admin</span>

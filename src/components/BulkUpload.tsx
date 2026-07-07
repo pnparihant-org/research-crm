@@ -41,7 +41,6 @@ const DESIGNATIONS = [
 ];
 
 function validateRow(row: Omit<Row, "_errors">, _clients: ClientItem[], stocks: StockItem[], isAdmin: boolean, designation: string): string[] {
-  const errs: string[] = [];
   // Normalize mode casing when possible, but don't block submission on it.
   if (row.modeOfCommunication) {
     row.modeOfCommunication = normalizeMode(row.modeOfCommunication, isAdmin);
@@ -54,11 +53,7 @@ function validateRow(row: Omit<Row, "_errors">, _clients: ClientItem[], stocks: 
   // Designation is the uploading user's own designation — always the same for every row
   if (designation) row.designation = designation;
 
-  if (!row.clientName?.trim()) errs.push("Client name is required");
-  // Admins have no personal designation to auto-fill — they upload on behalf of
-  // reps with varying designations, so don't force it on this path.
-  if (!isAdmin && !row.designation?.trim()) errs.push("Designation is required");
-  return errs;
+  return [];
 }
 
 /** Returns today's date in DD-MM-YYYY format (IST). */

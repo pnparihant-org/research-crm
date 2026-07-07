@@ -6,12 +6,12 @@ export interface IFormSubmission extends Document {
   salesPerson: string;
   clientName: string;
   designation: string;
-  modeOfCommunication: "Phone" | "Online Meet" | "Physical" | "Message";
-  formType: "research" | "institution";
+  modeOfCommunication: string;
+  formType: string;
   company?: string;
   sector: string;
   cmpTarget?: string;
-  recommendation?: "Buy" | "Sell" | "Hold";
+  recommendation?: string;
   analystName: string;
   buySideAnalystDesignation: string;
   rationale: string;
@@ -23,17 +23,17 @@ export interface IFormSubmission extends Document {
 const FormSubmissionSchema = new Schema<IFormSubmission>(
   {
     userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    date: { type: String, required: true },
-    salesPerson: { type: String, required: true },
-    clientName: { type: String, required: true },
-    designation: { type: String, required: true },
-    modeOfCommunication: { type: String, enum: ["Phone", "Online Meet", "Physical", "Message"], required: true },
-    formType: { type: String, enum: ["research", "institution"], required: true },
+    date: { type: String, default: "" },
+    salesPerson: { type: String, default: "" },
+    clientName: { type: String, default: "" },
+    designation: { type: String, default: "" },
+    modeOfCommunication: { type: String, default: "" },
+    formType: { type: String, default: "" },
     company: { type: String, default: "" },
     sector: { type: String, default: "" },
     cmpTarget: { type: String, default: "" },
-    recommendation: { type: String, enum: ["Buy", "Sell", "Hold", ""], default: "" },
-    analystName: { type: String, required: true },
+    recommendation: { type: String, default: "" },
+    analystName: { type: String, default: "" },
     buySideAnalystDesignation: { type: String, default: "" },
     rationale: { type: String, default: "" },
     feedback: { type: String, default: "" },
