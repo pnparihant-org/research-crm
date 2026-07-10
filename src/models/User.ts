@@ -23,6 +23,7 @@ export interface IUser extends Document {
   mpin?: string | null;
   loginOtp?: string | null;
   loginOtpExpiry?: Date | null;
+  lastActiveAt?: Date | null;
   createdAt: Date;
 }
 
@@ -53,6 +54,7 @@ const UserSchema = new Schema<IUser>(
     mpin: { type: String, default: null },
     loginOtp: { type: String, default: null },
     loginOtpExpiry: { type: Date, default: null },
+    lastActiveAt: { type: Date, default: null },
   },
   { timestamps: true }
 );

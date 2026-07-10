@@ -28,5 +28,6 @@ declare module "next-auth/jwt" {
     dept?: "research" | "institution" | null;
     twoFactorEnabled: boolean;
     twoFactorVerified: boolean;
+    lastActiveSync?: number;
   }
 }
