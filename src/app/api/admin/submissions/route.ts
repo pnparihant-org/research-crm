@@ -26,6 +26,17 @@ const _GET = async (req: NextRequest) => {
       { salesPerson:  { $regex: search, $options: "i" } },
       { company:      { $regex: search, $options: "i" } },
       { analystName:  { $regex: search, $options: "i" } },
+      { modeOfCommunication: { $regex: search, $options: "i" } },
+      { designation:  { $regex: search, $options: "i" } },
+      { formType:     { $regex: search, $options: "i" } },
+      { sector:       { $regex: search, $options: "i" } },
+      { cmpTarget:    { $regex: search, $options: "i" } },
+      { recommendation: { $regex: search, $options: "i" } },
+      { buySideAnalystDesignation: { $regex: search, $options: "i" } },
+      { rationale:    { $regex: search, $options: "i" } },
+      { feedback:     { $regex: search, $options: "i" } },
+      { others:       { $regex: search, $options: "i" } },
+      { date:         { $regex: search, $options: "i" } },
     ];
   }
 

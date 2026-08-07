@@ -221,7 +221,19 @@ export default function UserSubmissionsTable({
   const mobileFiltered = scopedRows.filter((r) => {
     const q = search.toLowerCase();
     return !q || r.company.toLowerCase().includes(q) || r.clientName.toLowerCase().includes(q) ||
-      r.salesPerson.toLowerCase().includes(q) || r.sharedByName.toLowerCase().includes(q);
+      r.salesPerson.toLowerCase().includes(q) || r.sharedByName.toLowerCase().includes(q) ||
+      (r.modeOfCommunication ?? "").toLowerCase().includes(q) ||
+      (r.designation ?? "").toLowerCase().includes(q) ||
+      (r.formType ?? "").toLowerCase().includes(q) ||
+      (r.sector ?? "").toLowerCase().includes(q) ||
+      (r.cmpTarget ?? "").toLowerCase().includes(q) ||
+      (r.recommendation ?? "").toLowerCase().includes(q) ||
+      (r.analystName ?? "").toLowerCase().includes(q) ||
+      (r.buySideAnalystDesignation ?? "").toLowerCase().includes(q) ||
+      (r.rationale ?? "").toLowerCase().includes(q) ||
+      (r.feedback ?? "").toLowerCase().includes(q) ||
+      (r.others ?? "").toLowerCase().includes(q) ||
+      (r.date ?? "").toLowerCase().includes(q);
   });
 
  

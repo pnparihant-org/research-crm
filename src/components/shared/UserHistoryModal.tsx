@@ -71,7 +71,15 @@ export default function UserHistoryModal({ userId, userName, userEmail, onClose,
       (s.clientName ?? "").toLowerCase().includes(q) ||
       (s.salesPerson ?? "").toLowerCase().includes(q) ||
       (s.sector ?? "").toLowerCase().includes(q) ||
-      (s.analystName ?? "").toLowerCase().includes(q);
+      (s.analystName ?? "").toLowerCase().includes(q) ||
+      (s.modeOfCommunication ?? "").toLowerCase().includes(q) ||
+      (s.designation ?? "").toLowerCase().includes(q) ||
+      (s.cmpTarget ?? "").toLowerCase().includes(q) ||
+      (s.buySideAnalystDesignation ?? "").toLowerCase().includes(q) ||
+      (s.rationale ?? "").toLowerCase().includes(q) ||
+      (s.feedback ?? "").toLowerCase().includes(q) ||
+      (s.others ?? "").toLowerCase().includes(q) ||
+      (s.date ?? "").toLowerCase().includes(q);
     const matchRec = !filterRec || s.recommendation === filterRec;
     return matchSearch && matchRec;
   });
