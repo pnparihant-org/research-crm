@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState, useCallback } from "react";
 import { useToast } from "@/components/ui/Toast";
+import BulkUploadClients from "@/components/admin/BulkUploadClients";
 
 // Cycles through a fixed palette for any number of dynamic categories
 const COLOR_PALETTE = [
@@ -31,6 +32,9 @@ export default function ManageClients() {
   const [newCatName, setNewCatName]     = useState("");
   const [addingCat, setAddingCat]       = useState(false);
   const [deletingCatId, setDeletingCatId] = useState<string | null>(null);
+
+  // Bulk upload panel
+  const [showBulkUpload, setShowBulkUpload] = useState(false);
 
   // Add client form
   const [showAdd, setShowAdd]   = useState(false);
@@ -180,6 +184,15 @@ export default function ManageClients() {
   // ── Render ────────────────────────────────────────────────────────────────
   return (
     <>
+      {/* Bulk upload modal */}
+      {showBulkUpload && (
+        <BulkUploadClients
+          existingClients={clients}
+          onClose={() => setShowBulkUpload(false)}
+          onDone={fetchAll}
+        />
+      )}
+
       {/* Edit modal */}
       {editTarget && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
@@ -265,6 +278,15 @@ export default function ManageClients() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a2 2 0 012-2z" />
                 </svg>
                 <span className="hidden xs:inline">Manage </span>Categories
+              </button>
+              <button
+                onClick={() => setShowBulkUpload(true)}
+                className="flex items-center gap-2 px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium rounded-lg transition-colors"
+              >
+                <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Bulk Upload
               </button>
               <button
                 onClick={() => { setShowAdd((v) => !v); setAddName(""); setAddCategory(catNames[0] ?? ""); }}
