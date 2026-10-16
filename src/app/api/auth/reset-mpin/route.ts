@@ -4,10 +4,22 @@ import { connectDB } from "@/lib/mongodb";
 import { User } from "@/models/User";
 import { auth } from "@/auth";
 import { withErrorHandler } from "@/lib/apiHandler";
+import { checkRateLimit } from "@/lib/rateLimiter";
+
+const MAX_ATTEMPTS = 5;
+const WINDOW_MS = 15 * 60 * 1000;
 
 const _POST = async (req: NextRequest) => {
   const session = await auth();
   if (!session?.user?.email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const rl = checkRateLimit(`mpin-reset:${session.user.id}`, MAX_ATTEMPTS, WINDOW_MS);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: `Too many incorrect attempts. Try again in ${Math.ceil((rl.retryAfterSeconds ?? 0) / 60)} minute(s).` },
+      { status: 429 }
+    );
+  }
 
   const { otp, mpin } = await req.json();
   if (!otp || !mpin) return NextResponse.json({ error: "OTP and new MPIN required" }, { status: 400 });
