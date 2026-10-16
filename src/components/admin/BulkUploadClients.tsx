@@ -23,7 +23,7 @@ export default function BulkUploadClients({
   const [submitting, setSubmitting] = useState(false);
 
   const existingSigs = useMemo(
-    () => new Set(existingClients.map((c) => `${c.category.toLowerCase()}|${c.name.toLowerCase()}`)),
+    () => new Set(existingClients.map((c) => `${(c.category ?? "").toLowerCase()}|${(c.name ?? "").toLowerCase()}`)),
     [existingClients]
   );
 

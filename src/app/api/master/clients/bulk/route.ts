@@ -47,7 +47,7 @@ const _POST = async (req: NextRequest) => {
 
   // Skip rows that already exist (same name + category, case-insensitive).
   const existingClients = await Client.find().lean();
-  const existingSigs = new Set(existingClients.map((c) => `${c.category.toLowerCase()}|${c.name.toLowerCase()}`));
+  const existingSigs = new Set(existingClients.map((c) => `${(c.category ?? "").toLowerCase()}|${(c.name ?? "").toLowerCase()}`));
 
   const toInsert: InRow[] = [];
   const insertSigs = new Set<string>();
