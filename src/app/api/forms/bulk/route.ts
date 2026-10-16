@@ -145,7 +145,9 @@ const _POST = async (req: NextRequest) => {
     clientName:               row.clientName ?? "",
     designation:              row.designation?.trim() || "-",
     modeOfCommunication:      row.modeOfCommunication ?? "",
-    formType:                 row.company?.trim() ? "research" : "institution",
+    formType:                 session.user.dept === "institution" ? "institution"
+                             : session.user.dept === "research"    ? "research"
+                             : (row.company?.trim() ? "research" : "institution"),
     company:                  row.company ?? "",
     sector:                   row.sector ?? "",
     cmpTarget:                row.cmpTarget ?? "",
