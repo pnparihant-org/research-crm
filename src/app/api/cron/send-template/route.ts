@@ -33,7 +33,8 @@ const _POST = async (req: NextRequest) => {
     return NextResponse.json({ message: "No users found", sent: 0 });
   }
 
-  // Resolve all client IDs in one query
+  // Resolve all client IDs referenced by assignments, plus the full client list —
+  // admins and master admins get every client, same as /api/users/my-clients.
   const ClientCol = mongoose.connection.collection("clients");
   const allClientIds = users.flatMap((u) =>
     (u.assignedClients ?? []).map((ac: { client: mongoose.Types.ObjectId }) => ac.client).filter(Boolean)
@@ -46,6 +47,11 @@ const _POST = async (req: NextRequest) => {
       ).toArray()
     : [];
   const clientMap = Object.fromEntries(clientDocs.map((c) => [c._id.toString(), c.name as string]));
+
+  const needsAllClients = users.some((u) => u.role === "admin" || u.role === "master_admin");
+  const allClientNames = needsAllClients
+    ? (await ClientCol.find({}, { projection: { name: 1 } }).toArray()).map((c) => c.name as string)
+    : [];
 
   // IST date label for subject/filename
   const now = new Date();
@@ -61,11 +67,13 @@ const _POST = async (req: NextRequest) => {
 
   for (const user of users) {
     try {
-      const clientNames: string[] = (user.assignedClients ?? [])
-        .map((ac: { client: mongoose.Types.ObjectId }) => clientMap[ac.client?.toString()] ?? "")
-        .filter(Boolean);
-
       const isAdmin = user.role === "admin" || user.role === "master_admin";
+      const clientNames: string[] = isAdmin
+        ? allClientNames
+        : (user.assignedClients ?? [])
+            .map((ac: { client: mongoose.Types.ObjectId }) => clientMap[ac.client?.toString()] ?? "")
+            .filter(Boolean);
+
       const designation = (user.designation as string | null) ?? "";
       const buffer = await generateTemplateBuffer(clientNames, user._id.toString(), dateLabel, isAdmin, designation);
       await sendDailyTemplateEmail(user.email, user.name, dateLabel, buffer);
